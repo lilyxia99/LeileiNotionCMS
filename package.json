@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "netlify-cli": "^21.5.2",
     "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@notionhq/client": "^3.1.3"
   }
 }

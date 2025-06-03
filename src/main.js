@@ -1,24 +1,21 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Leilei's Notion CMS</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+async function fetchDataFromAPIEndPoint(){
+  const cards = await fetch('/api/fetchNotion')
+  .then((res)=>res.json()
+  .then((data)=>data.results));
+  console.log(cards);
+  document.querySelector('.card-container').innerHTML=cards.map((card)=>`
+         <article class="card">
+          <img src="${card.properties.titleImage.files[0].external.url}" 
+          alt="sign language mail pack cover" class="card__image">
+          <h2 class="card__heading">${card.properties.Name.title[0].plain_text}</h2>
+          <div class="card__content"><p>
+            ${card.properties.description.rich_text[0].plain_text}
+          </p></div>
+       </article>
+       `);
+}
 
-setupCounter(document.querySelector('#counter'))
+fetchDataFromAPIEndPoint();
+
