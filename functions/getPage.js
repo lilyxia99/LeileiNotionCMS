@@ -17,12 +17,33 @@ export default async (req, context) => {
       }
     }
   });
-    const IDs = response.results.map((page)=>page.id)
-    const blocks = await notion.blocks.children.list({
-      block_id: IDs[0],
-      page_size: 100, // You can adjust this if needed
+    const pages = response.results.map((page) =>({
+      Name:page.properties.Name.title[0].plain_text,
+      id:page.id,
+      slug:page.properties.slug.rich_text[0]?.plain_text||page.id,
+
+    }));
+
+    // Fetch content for each page
+    const pagesWithContent = await Promise.all(
+      pages.map(async (page) => {
+        const blocks = await notion.blocks.children.list({
+          block_id: page.id,
+          page_size: 100,
+        });
+        return {
+          page_id:page.id,
+          title:page.Name,
+          slug:page.slug,
+          content: blocks.results,
+        };
+      })
+    );
+
+    return new Response(JSON.stringify(pagesWithContent), {
+      headers: { "Content-Type": "application/json" },
     });
-    console.log(blocks);
+    
   return new Response(JSON.stringify(blocks))}
   catch(e){
     console.error(e);
