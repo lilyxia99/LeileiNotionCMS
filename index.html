@@ -1,40 +1,143 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Leilei's Notion CMS</title>
+    <title>Leilei Xia - Creative Portfolio</title>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- the props -->
+    <meta name="description" content="Leilei Xia's creative portfolio showcasing design and development work" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Open Props -->
     <link rel="stylesheet" href="https://unpkg.com/open-props"/>
-
-    <!-- optional imports that use the props -->
     <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/open-props/buttons.min.css"/>
-
-    <!-- individual imports -->
     <link rel="stylesheet" href="https://unpkg.com/open-props/indigo.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/open-props/indigo-hsl.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/open-props/easings.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/open-props/animations.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/open-props/sizes.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/>
-    <!-- see PropPacks for the full list -->
-    
   </head>
   <body>
-    <main class = "card-container">
-      <div id="app"></div>
-       <article class="card">
-          <img src="https://leileixia-website.b-cdn.net/%E6%89%8B%E8%AF%AD%E5%B0%81%E9%9D%A2%E5%B0%81%E5%BA%95.jpg" 
-          alt="sign language mail pack cover" class="card__image">
-          <h2 class="card__heading">Sign Language Mail Pack</h2>
-          <div class="card__content"><p>
-            dafjljalkjgklfdjalkgjadkljfdlk
-          </p></div>
-       </article>
-    </main>
-    
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav__container">
+        <div class="nav__brand">
+          <h1 class="nav__logo">Leilei Xia</h1>
+        </div>
+        <div class="nav__links">
+          <a href="#about" class="nav__link">About</a>
+          <a href="#work" class="nav__link">Work</a>
+          <a href="#contact" class="nav__link">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="hero__container">
+        <div class="hero__content">
+          <h1 class="hero__title">
+            Creative Designer & 
+            <span class="hero__title--accent">Developer</span>
+          </h1>
+          <p class="hero__subtitle">
+            I craft meaningful digital experiences through thoughtful design and clean code
+          </p>
+          <div class="hero__cta">
+            <a href="#work" class="btn btn--primary">View My Work</a>
+            <a href="#about" class="btn btn--secondary">About Me</a>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="hero__decoration"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">About Me</h2>
+          <p class="section__subtitle">Passionate about creating beautiful and functional experiences</p>
+        </div>
+        <div class="about__content">
+          <div class="about__text">
+            <p class="about__intro">
+              Hello! I'm Leilei, a creative professional who bridges the gap between design and technology. 
+              I believe that great digital experiences come from understanding both the aesthetic and technical aspects of creation.
+            </p>
+            <p>
+              My work spans across visual design, user experience, and front-end development. 
+              I'm particularly passionate about accessibility, clean code, and creating solutions that make a positive impact.
+            </p>
+            <div class="about__skills">
+              <div class="skill-tag">UI/UX Design</div>
+              <div class="skill-tag">Frontend Development</div>
+              <div class="skill-tag">Visual Design</div>
+              <div class="skill-tag">Accessibility</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="work">
+      <div class="container">
+        <div class="section__header">
+          <h2 class="section__title">Featured Work</h2>
+          <p class="section__subtitle">A selection of projects I'm proud to share</p>
+        </div>
+        <div class="card-container">
+          <div id="app"></div>
+          <!-- Static card for demonstration -->
+          <article class="card">
+            <div class="card__image-wrapper">
+              <img src="https://leileixia-website.b-cdn.net/%E6%89%8B%E8%AF%AD%E5%B0%81%E9%9D%A2%E5%B0%81%E5%BA%95.jpg" 
+                   alt="Sign language mail pack cover" class="card__image">
+              <div class="card__overlay">
+                <span class="card__category">Design</span>
+              </div>
+            </div>
+            <div class="card__content">
+              <h3 class="card__title">Sign Language Mail Pack</h3>
+              <p class="card__description">
+                A comprehensive visual communication system designed to help people learn and practice sign language through interactive mail experiences.
+              </p>
+              <div class="card__tags">
+                <span class="tag">Visual Design</span>
+                <span class="tag">Accessibility</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="contact__content">
+          <h2 class="contact__title">Let's Create Something Together</h2>
+          <p class="contact__subtitle">
+            I'm always interested in new opportunities and collaborations
+          </p>
+          <div class="contact__links">
+            <a href="mailto:hello@leileixia.com" class="contact__link">
+              <span class="contact__link-text">hello@leileixia.com</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

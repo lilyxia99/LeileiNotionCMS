@@ -1,20 +1,65 @@
 import './style.css'
 
 async function fetchDataFromAPIEndPoint(){
-  const cards = await fetch('/api/fetchNotion')
-  .then((res)=>res.json()
-  .then((data)=>data.results));
-  console.log(cards);
-  document.querySelector('.card-container').innerHTML=cards.map((card)=>`
-         <article class="card">
-          <img src="${card.properties.titleImage.files[0].external.url}" 
-          alt="sign language mail pack cover" class="card__image">
-          <h2 class="card__heading">${card.properties.Name.title[0].plain_text}</h2>
-          <div class="card__content"><p>
-            ${card.properties.description.rich_text[0].plain_text}
-          </p></div>
-       </article>
-       `);
+  try {
+    const cards = await fetch('/api/fetchNotion')
+      .then((res) => res.json())
+      .then((data) => data.results);
+    
+    console.log(cards);
+    
+    const cardContainer = document.querySelector('#app');
+    if (cardContainer && cards && cards.length > 0) {
+      cardContainer.innerHTML = cards.map((card) => {
+        const imageUrl = card.properties.titleImage?.files?.[0]?.external?.url || '';
+        const title = card.properties.Name?.title?.[0]?.plain_text || 'Untitled';
+        const description = card.properties.description?.rich_text?.[0]?.plain_text || 'No description available';
+        
+        return `
+          <article class="card">
+            <div class="card__image-wrapper">
+              <img src="${imageUrl}" 
+                   alt="${title}" class="card__image">
+              <div class="card__overlay">
+                <span class="card__category">Project</span>
+              </div>
+            </div>
+            <div class="card__content">
+              <h3 class="card__title">${title}</h3>
+              <p class="card__description">${description}</p>
+              <div class="card__tags">
+                <span class="tag">Design</span>
+                <span class="tag">Development</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    const cardContainer = document.querySelector('#app');
+    if (cardContainer) {
+      cardContainer.innerHTML = '<p>Unable to load projects at this time.</p>';
+    }
+  }
 }
 
-fetchDataFromAPIEndPoint();
+// Add smooth scrolling for navigation links
+document.addEventListener('DOMContentLoaded', () => {
+  // Fetch data
+  fetchDataFromAPIEndPoint();
+  
+  // Add scroll effect to navigation
+  const nav = document.querySelector('.nav');
+  let lastScrollY = window.scrollY;
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > lastScrollY && window.scrollY > 100) {
+      nav.style.transform = 'translateY(-100%)';
+    } else {
+      nav.style.transform = 'translateY(0)';
+    }
+    lastScrollY = window.scrollY;
+  });
+});
