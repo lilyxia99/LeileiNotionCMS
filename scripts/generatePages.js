@@ -385,16 +385,22 @@ function generateHTML({ title, slug, content, description, titleImage }) {
 
 async function run() {
   try {
-    // Use local API endpoint for development, or deployed URL for production
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? 'https://leileinotioncms.netlify.app/api/getPage'
-      : 'http://localhost:8888/api/getPage';
+    // Try local development server first, then fallback to deployed URL
+    let apiUrl = 'http://localhost:8888/api/getPage';
+    let response;
     
-    console.log(`Fetching pages from: ${apiUrl}`);
-    
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+      console.log(`Trying local development server: ${apiUrl}`);
+      response = await fetch(apiUrl);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    } catch (localError) {
+      console.log('Local server not available, trying deployed URL...');
+      apiUrl = 'https://leileinotioncms.netlify.app/api/getPage';
+      console.log(`Fetching pages from: ${apiUrl}`);
+      response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
     }
     
     const pages = await response.json();
@@ -408,25 +414,31 @@ async function run() {
       // Extract additional data for better page generation
       const titleImage = page.titleImage || '';
       const description = page.description || '';
+      const slug = page.slug || page.page_id || 'untitled';
       
       const html = generateHTML({
         title: page.title,
-        slug: page.slug,
+        slug: slug,
         content: page.content,
         description,
         titleImage
       });
       
-      const filename = `${page.slug || page.page_id}.html`;
+      // Ensure slug is safe for filename
+      const safeSlug = slug.replace(/[^a-zA-Z0-9-_]/g, '-').toLowerCase();
+      const filename = `${safeSlug}.html`;
       const filepath = path.join(OUTPUT_DIR, filename);
 
       fs.writeFileSync(filepath, html);
-      console.log(`✅ Generated: ${filepath}`);
+      console.log(`✅ Generated: ${filepath} (slug: ${slug})`);
     }
     
     console.log(`\n🎉 Successfully generated ${pages.length} pages in ${OUTPUT_DIR}`);
   } catch (error) {
     console.error('❌ Error generating pages:', error);
+    console.error('Make sure either:');
+    console.error('1. Your dev server is running (npm run dev) in another terminal, OR');
+    console.error('2. Your site is deployed and accessible at the production URL');
     process.exit(1);
   }
 }
