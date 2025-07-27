@@ -84,6 +84,34 @@ function convertRichText(richText = []) {
     .join('');
 }
 
+function convertToEmbedUrl(url) {
+  // YouTube URL conversion
+  if (url.includes('youtube.com') || url.includes('youtu.be')) {
+    let videoId = '';
+    
+    if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0];
+    } else if (url.includes('youtube.com/watch?v=')) {
+      videoId = url.split('v=')[1].split('&')[0];
+    }
+    
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+  }
+  
+  // Vimeo URL conversion
+  if (url.includes('vimeo.com')) {
+    const videoId = url.split('vimeo.com/')[1].split('?')[0];
+    if (videoId) {
+      return `https://player.vimeo.com/video/${videoId}`;
+    }
+  }
+  
+  // Return original URL if no conversion needed
+  return url;
+}
+
 function renderBlock(block) {
   switch (block.type) {
     case 'paragraph':
@@ -91,6 +119,14 @@ function renderBlock(block) {
     case 'image':
       const imageUrl = block.image?.external?.url || block.image?.file?.url || '';
       return `<img src="${imageUrl}" alt="" class="content-image" />`;
+    case 'video':
+      const videoUrl = block.video?.external?.url || block.video?.file?.url || '';
+      if (videoUrl) {
+        const embedUrl = convertToEmbedUrl(videoUrl);
+        const caption = convertRichText(block.video?.caption || []);
+        return `<div class="video-wrapper"><iframe src="${embedUrl}" frameborder="0" allowfullscreen class="content-video"></iframe>${caption ? `<p class="video-caption">${caption}</p>` : ''}</div>`;
+      }
+      return '';
     case 'heading_1':
       return `<h1>${convertRichText(block.heading_1?.rich_text)}</h1>`;
     case 'heading_2':
