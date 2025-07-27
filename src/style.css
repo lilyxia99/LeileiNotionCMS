@@ -379,6 +379,14 @@ body {
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 500;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover .card__category {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .card__content {
