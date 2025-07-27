@@ -59,15 +59,14 @@ function generateHTML({ title, slug, content, description, titleImage }) {
   <title>${title} - Leilei Xia</title>
   <meta name="description" content="${description || title}" />
   
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Open Props -->
+  <link rel="stylesheet" href="https://unpkg.com/open-props"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/>
   
   <style>
     :root {
-      --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --font-display: 'Playfair Display', Georgia, serif;
+      --font-primary: var(--font-humanist);
+      --font-display: var(--font-humanist);
       --color-primary: #6366f1;
       --color-text-primary: #111827;
       --color-text-secondary: #6b7280;
