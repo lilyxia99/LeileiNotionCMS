@@ -18,8 +18,826 @@
   <link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/>
   
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="/src/style.css"/>
+  <!-- Main Stylesheet - Inlined -->
+  <style>
+    /* CSS Custom Properties */
+:root {
+  --font-primary: var(--font-humanist);
+  --font-display: var(--font-humanist);
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-accent: #f59e0b;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-light: #9ca3af;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-bg-tertiary: #f3f4f6;
+  --color-border: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  --sectonTop:var(--size-8, 5rem);
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  line-height: 1.6;
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--size-4, 1rem);
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.nav__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--size-4, 1rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.nav__logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--size-6, 2rem);
+}
+
+.nav__link {
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.nav__link:hover {
+  color: var(--color-primary);
+}
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width 0.2s ease;
+}
+
+.nav__link:hover::after {
+  width: 100%;
+}
+
+/* Hero Section */
+
+
+.hero {
+  padding: 140px 0 100px;
+  background-image:url('https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/DSC00105.jpg');
+  /*background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
+  background-size: cover; /* This will fill the width and maintain aspect ratio */
+  background-position: 70% center; /* Optional: centers the image */
+  background-repeat: no-repeat; /* Optional: prevents image repetition */
+  background-color:black;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--size-8, 1rem);/*var(--size-4, 1rem)*/
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--size-8, 3rem);
+  align-items: center;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 200;
+  line-height: 1.1;
+  margin: 0 0 var(--size-4, 1.5rem) 0;
+  letter-spacing: -0.02em;
+}
+
+.hero__title--accent {
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  opacity: 0.9;
+  margin: 0 0 var(--size-6, 2rem) 0;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.hero__cta {
+  display: flex;
+  gap: var(--size-4, 1rem);
+  flex-wrap: wrap;
+}
+
+.hero__visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero__decoration {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-radius: 50%;
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+}
+
+.hero__decoration::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-20px); 
+  }
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: white;
+}
+
+.btn--primary:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Section Styles */
+.section__header {
+  text-align: left;
+  margin-left:var(--size-10, 4rem);
+  margin-bottom: var(--size-8, 4rem) ;
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 350;
+  margin: 0 0 var(--size-3, 1rem) 0;
+  color: var(--color-text-primary);
+}
+
+.section__subtitle {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* About Section */
+.about {
+  padding: var(--sectonTop) 0;
+  background: var(--color-bg-secondary);
+}
+
+.about__content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about__intro {
+  font-size: 1.3rem;
+  color: var(--color-text-primary);
+  font-weight: 300;
+  margin-bottom: var(--size-6, 2rem);
+  line-height: 1.6;
+}
+
+.about__text p {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--size-4, 1.5rem);
+  line-height: 1.7;
+}
+
+.about__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-3, 0.75rem);
+  margin-top: var(--size-6, 2rem);
+}
+
+.skill-tag {
+  background: var(--color-primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Work Section */
+.work {
+  padding: var(--size-12, 5rem) 0;
+}
+
+.card-container {
+
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+#app{
+  display: grid;
+  grid-auto-flow: row; /* This makes it fill horizontally first */
+  gap: var(--size-6, 2rem);
+  grid-template-columns: 1fr 1fr 1fr;
+  width:100% !important;
+}
+
+/* Enhanced Card Styles */
+.card {
+  background: var(--color-bg-primary);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-border);
+  max-width: 350px;
+  width:auto;
+  max-height: 450px;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.card__link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card__link:hover {
+  color: inherit;
+}
+
+.card__image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.card__image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card__image {
+  transform: scale(1.05);
+}
+
+.card__overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+.card__category {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.card__content {
+  padding: var(--size-4, 1.5rem);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin: 0 0 var(--size-2, 0.75rem) 0;
+  color: var(--color-text-primary);
+}
+
+.card__description {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0 0 var(--size-3, 1rem) 0;
+  font-size: 0.95rem;
+}
+
+.card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2, 0.5rem);
+}
+
+.tag {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Contact Section */
+.contact {
+
+  padding: var(--sectonTop) 0;
+  background: var(--color-bg-secondary);
+  text-align: center;
+  align-items: center;
+}
+
+.contact__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  margin: 0 0 var(--size-4, 1.5rem) 0;
+  color: var(--color-text-primary);
+}
+
+.contact__subtitle {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--size-8, 3rem) 0;
+}
+
+.contact__link {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 32px;
+  background: var(--color-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.contact__link:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav__links {
+    display: none;
+  }
+  
+  .nav__container {
+    justify-content: center;
+  }
+  
+  .hero__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--size-6, 2rem);
+    grid-template-columns: none;
+  }
+
+  .hero__title{
+    margin:auto auto 1rem auto;
+  }
+
+  
+  .hero__visual {
+    order: -1;
+  }
+  
+  .hero__decoration {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .hero__cta {
+    justify-content: center;
+  }
+  
+  .about,
+  .work,
+  .contact {
+    padding: var(--size-10, 4rem) 0;
+    text-align: center;
+  }
+  
+  .section__header {
+    text-align: center;
+  }
+  
+  .about__content {
+    text-align: center;
+  }
+  
+   #app {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center horizontally */
+  justify-content: flex-start; /* Start from top */
+  gap: var(--size-4, 1.5rem);
+  max-width: 30rem;
+  margin: 0 auto; /* Center the container itself */
+}
+  
+  .card {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .about__skills {
+    justify-content: center;
+  }
+  
+  .contact__content {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav__container {
+    height: 60px;
+  }
+  
+  .hero {
+    padding: 120px 0 80px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .card__content {
+    padding: var(--size-4, 1.5rem);
+  }
+}
+
+/* Generated Page Styles */
+.page-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.page-nav__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--size-4, 1rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.page-nav__logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.page-nav__links {
+  display: flex;
+  gap: var(--size-6, 2rem);
+}
+
+.page-nav__link {
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.page-nav__link:hover {
+  color: var(--color-primary);
+}
+
+.page-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width 0.2s ease;
+}
+
+.page-nav__link:hover::after {
+  width: 100%;
+}
+
+.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px var(--size-4, 1rem) var(--size-8, 3rem);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-primary);
+  text-decoration: none;
+  margin-bottom: var(--size-6, 2rem);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--color-primary-dark);
+}
+
+.hero-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: var(--size-6, 2rem);
+  box-shadow: var(--shadow-lg);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 450;
+  margin: 0 0 var(--size-4, 1.5rem) 0;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+  right:0;
+  display: block; /* Ensure it's block-level */
+}
+
+.page-description {
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--size-8, 3rem);
+  line-height: 1.6;
+}
+
+.content {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--color-text-primary);
+
+  /*-----------------some content variable-----------------*/
+  --bold:500;
+}
+
+.content p {
+  margin-bottom: var(--size-4, 1.5rem);
+}
+
+.content-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: var(--size-6, 2rem) 0;
+  box-shadow: var(--shadow-md);
+}
+
+.content h1 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: var(--bold);
+  margin: var(--size-8, 3rem) 0 var(--size-4, 1.5rem) 0;
+  color: var(--color-text-primary);
+}
+
+.content h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: var(--bold);
+  margin: var(--size-6, 2rem) 0 var(--size-3, 1rem) 0;
+  color: var(--color-text-primary);
+}
+
+.content h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: var(--bold);
+  margin: var(--size-4, 1.5rem) 0 var(--size-2, 0.75rem) 0;
+  color: var(--color-text-primary);
+}
+
+.content blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: var(--size-4, 1.5rem);
+  margin: var(--size-6, 2rem) 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+  padding: var(--size-4, 1.5rem);
+  border-radius: 8px;
+}
+
+.content pre {
+  background: var(--color-bg-secondary);
+  padding: var(--size-4, 1.5rem);
+  border-radius: 12px;
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+}
+
+.content code {
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.content pre code {
+  background: none;
+  padding: 0;
+}
+
+.content ul, .content ol {
+  padding-left: var(--size-6, 2rem);
+  margin-bottom: var(--size-4, 1.5rem);
+}
+
+.content li {
+  margin-bottom: var(--size-2, 0.75rem);
+}
+
+/* Column Layout Styles */
+.column-list {
+  display: flex;
+  gap: var(--size-4, 1.5rem);
+  margin: var(--size-4, 1.5rem) 0;
+}
+
+.column {
+  flex: 1;
+  min-width: 0; /* Prevents flex items from overflowing */
+}
+
+.block-with-children {
+  margin: var(--size-2, 0.75rem) 0;
+}
+
+/* Generated Page Responsive Design */
+@media (max-width: 768px) {
+  .page-nav__links {
+    display: none;
+  }
+  
+  .page-nav__container {
+    justify-content: center;
+  }
+  
+  .main-content {
+    padding: 100px var(--size-3, 0.75rem) var(--size-6, 2rem);
+  }
+  
+  .hero-image {
+    height: 250px;
+    border-radius: 12px;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .page-description {
+    font-size: 1.1rem;
+  }
+  
+  .content {
+    font-size: 1rem;
+  }
+  
+  /* Stack columns vertically on mobile */
+  .column-list {
+    flex-direction: column;
+    gap: var(--size-2, 0.75rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-nav__container {
+    height: 60px;
+  }
+  
+  .main-content {
+    padding: 80px var(--size-2, 0.5rem) var(--size-4, 1.5rem);
+  }
+  
+  .hero-image {
+    height: 200px;
+  }
+}
+
+  </style>
 </head>
 <body>
   <!-- Navigation -->
@@ -47,11 +865,11 @@
     <p class="page-description">how to touch something without touching anything?</p>
     
     <div class="content">
-      <div class="column-list"><div class="column"><h3>Empty Touch</h3><p>“Empty touch” is a tactile experience I discovered that can simulate the feeling of touching something by reenacting the gesture of touching the object guided, by verbal or visual cues. This project contains a video installation and a workshop series</p><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/empty%20touch.png" alt="" class="content-image" /><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/1bcaf097-a93a-4b97-a50b-746128ce661d/8db9ffcf-6a00-495c-bbfc-6cd81fc6a2d1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Z3Z3D744%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T213934Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJHMEUCIDxKsO9IH479vCGKflkKP54nb9tXsNLcw7f7pbTMguXHAiEA63ikZXGqjcMVFMZch4kZxa6pM4PvRToYJhuq%2B4gNOyUq%2FwMIfhAAGgw2Mzc0MjMxODM4MDUiDH0jjrZGje%2B2TFxRYSrcA4csdO33UgSNqC6MJTSFafS69hN%2F78lH1cmWZeHjn0%2B6%2F8zoEdNfyC2kwhEE8MMVKgf4twgIsTulHA2HV8%2FHz0bIxQHjo0WcOHkfbykPvRmsQpLbPfX5Z041j72mej6Jly8lMTg9%2BiBVd7MSzH5uqT5NkKq5pC0PD8fzT9MswiYnOVGyiif7VUuv%2FWtW1e6wMKjnMcieMhMu0%2FcNoHHOjARKnGDBhYL2X%2Fol6w47JjN1xdTnovUdwr1Ig%2Bl%2BjV3nEyDBOoA4iRIJKst7URng8ClyHX48uRfhEMbdMfD1wNT0tWmtDqyOy%2FVM%2BwZ%2FY85ClZAbzrY7kyK7JWvpcKBGJyxX1N67TKakCbDtoPol4f2JZp0UttOAuBRVIZ4xjEW9k6XzKhpMAaSS9PnvSE6Do42%2FUtvVk5SaCtvLlO6vpUxSLafppoD6%2BfId%2F6UWlqh5saQN7VtXqPXKQw6r05WdtGxPZzP0JhxKWBrxUGw%2BZPydlCZSE3MIp1sMrxDw43clyKVPQ9v9Kh5XknmYm%2Bi7Jz1QNK4iEx1eLJ2oeQLEYsc5JE92StXp7cwBJ3PPycfuQhTVgIB5gdzTmqQVd99FoVFizDLz%2BeFq2Td7GOi5LQwja6b6j7gfyc%2BDVanyMOukmsQGOqUBDGyPM%2Bzm%2FibmvuUCx6QskI56QNQKNKB8ri%2B8NrF%2FCzWqHP48RH90ASpUnsnqCt6Z877WecHHQ1XRCGQtfgYM5%2FtJU8UnTrQBQGJCQ6eGhPsZmReqA18qtTB26yymPkMYMbuMmRzpa%2FS0Z%2BFuDeDvC1lZTnvuwf3u7sWLDXVnbxupMKuVGAxwlkb3Q4BguM%2FISBxiEOJGXOrqFctupNzD%2BeBnWq4z&X-Amz-Signature=63e8583dcf36291f1d27a6bca6291d731f40be0c2546b6ed982bee8ee8651516&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" /><p></p></div><div class="column"><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/IMG_7227%201.png" alt="" class="content-image" /><h3><em><strong>The Palace</strong></em></h3><p>Video Link: https://youtu.be/LzCTLmiBhfc</p><p><strong>11'24'', Two channel video installation, transparent fabric and projections, 2023.</strong></p><p>"The Palace" is a combination of tactile experience and visual storytelling. The holographic and immersive experience render the piece both as a tutorial and a narrative, and its narrative perspective is both first person and third person. The plot adapts the story of the Emperor's New Clothes and Buddhist scriptures Śūraṅgama Sūtra; in the Emperor's New Clothes, the emperor is deceived into wearing invisible clothing, but in my story, the emperor voluntarily chooses to do so because he believes that memories from the cherished one are more important than luxurious garments made of jewels. As long as one believes, even in ruins, the treasures in one's heart will not disappear. </p><p></p></div></div>
-<img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/dc8dc046-8907-42af-87e5-9b1b544625da/MESEWHL_o.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZE6VCVDV%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T213932Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJGMEQCIC9DruTuQg53qKbf082v0HhFqG4TjDYiCMsYyHYedif6AiAhSAeKRgN51l5Br%2BcZsnBG2UZLYs21HBEygugi4sEydyr%2FAwh%2BEAAaDDYzNzQyMzE4MzgwNSIM7rSlssfKHRyGDptiKtwDEpAPPP0R9%2B%2FccwGvm1w6iq9esnLKXyYHzCLBIV52so76c8KYCY3gs3Lhd%2BsayOXVi8JdO1eycjtb1elolqfEZcVevgPeQtYqeJSPAeGmWva4Im5MAJvxYmhDgQM63ujdcGP1UKKadJbizXLwtkat8eB1jczBy%2FBil35Hj%2BaeUepBQyRh57g4q4ZbOopHeXkO4RG3bCT9cDdtTNK0J%2BumrI%2BAtPgKMStJtXRXZLS9lW9IClxl2MsIuLkpXq8PYnw6ge2LulC9u9y33ulXuZbZe8h%2FFBkLAcf82%2BaOzXvmkw6R5t2VGVp5HSjXWQQDq47ei39Ito7Vi00kKNL%2BJ2WgYjeUrehGqTRJj842YnOYZ6gpI3kAT0dv8RqFJD5vF%2BOqhzbgYw%2F8z49ByDghipg91JugVBZM7ZdLgDDLtRRWPDbwzNWEVJqHcpv%2BiHq7h44svSZr1O%2F87U3TSv2C8i73ol3xZ%2FWZvV5UdwK7ujrAxUFTT3IJxVOo3OCrItHfMVVwW44H9hpVexk3lCDOFcc82izPh0Yax4eiQ%2Fo1ucvqt8u%2BIZnQKVNlRrvp56xl7%2Bm3cz2YOYIxUJdRZplGl9Kk25Ti1zCkBVSxmm5KnT6m7%2Ff3VQcb1w8OhxMIoj0wzKSaxAY6pgEQg60I1wVFr8jGgQxHT3rf%2B5g5f%2F0nXxo9GGVPikfudJQ97ZBdmQPh5XA1DKeGLy4eef8Ea7GLODRQyAIyDHk0TJch2hD2X8swlvA9UtY2QuG47PmRv2ELLGFl0XUEa%2Fa%2FnGg3UlAOoDzNcoN8P68F6xuztGbz9OHjy4UC33B2F%2FqYrfCJfv3BAN2qTrVsB8HPrP1Ye2pxBMmYKP4baqknaLq2dnRy&X-Amz-Signature=1b5a68c9378dd7de6c8dcc9ad588939694e3072de11cf477fe79f59e7f3c397c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" />
-<img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/62067c1e-4b0c-420d-aa14-2577bdab1dad/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZE6VCVDV%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T213932Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJGMEQCIC9DruTuQg53qKbf082v0HhFqG4TjDYiCMsYyHYedif6AiAhSAeKRgN51l5Br%2BcZsnBG2UZLYs21HBEygugi4sEydyr%2FAwh%2BEAAaDDYzNzQyMzE4MzgwNSIM7rSlssfKHRyGDptiKtwDEpAPPP0R9%2B%2FccwGvm1w6iq9esnLKXyYHzCLBIV52so76c8KYCY3gs3Lhd%2BsayOXVi8JdO1eycjtb1elolqfEZcVevgPeQtYqeJSPAeGmWva4Im5MAJvxYmhDgQM63ujdcGP1UKKadJbizXLwtkat8eB1jczBy%2FBil35Hj%2BaeUepBQyRh57g4q4ZbOopHeXkO4RG3bCT9cDdtTNK0J%2BumrI%2BAtPgKMStJtXRXZLS9lW9IClxl2MsIuLkpXq8PYnw6ge2LulC9u9y33ulXuZbZe8h%2FFBkLAcf82%2BaOzXvmkw6R5t2VGVp5HSjXWQQDq47ei39Ito7Vi00kKNL%2BJ2WgYjeUrehGqTRJj842YnOYZ6gpI3kAT0dv8RqFJD5vF%2BOqhzbgYw%2F8z49ByDghipg91JugVBZM7ZdLgDDLtRRWPDbwzNWEVJqHcpv%2BiHq7h44svSZr1O%2F87U3TSv2C8i73ol3xZ%2FWZvV5UdwK7ujrAxUFTT3IJxVOo3OCrItHfMVVwW44H9hpVexk3lCDOFcc82izPh0Yax4eiQ%2Fo1ucvqt8u%2BIZnQKVNlRrvp56xl7%2Bm3cz2YOYIxUJdRZplGl9Kk25Ti1zCkBVSxmm5KnT6m7%2Ff3VQcb1w8OhxMIoj0wzKSaxAY6pgEQg60I1wVFr8jGgQxHT3rf%2B5g5f%2F0nXxo9GGVPikfudJQ97ZBdmQPh5XA1DKeGLy4eef8Ea7GLODRQyAIyDHk0TJch2hD2X8swlvA9UtY2QuG47PmRv2ELLGFl0XUEa%2Fa%2FnGg3UlAOoDzNcoN8P68F6xuztGbz9OHjy4UC33B2F%2FqYrfCJfv3BAN2qTrVsB8HPrP1Ye2pxBMmYKP4baqknaLq2dnRy&X-Amz-Signature=1b8331fc07df037b840a8370926e67969ac4385163d99868804bbd316c84663d&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" />
+      <div class="column-list"><div class="column"><h3>Empty Touch</h3><p>“Empty touch” is a tactile experience I discovered that can simulate the feeling of touching something by reenacting the gesture of touching the object guided, by verbal or visual cues. This project contains a video installation and a workshop series</p><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/empty%20touch.png" alt="" class="content-image" /><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/1bcaf097-a93a-4b97-a50b-746128ce661d/8db9ffcf-6a00-495c-bbfc-6cd81fc6a2d1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466X5GGHLZL%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T214248Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJHMEUCIQDypa%2FoaDwYe0%2FZjF27rl%2B14PXdbUb9mS3KDia5hjVhfwIgB%2BJdaqyokyzFGLjHg0T9mbJWijRITUf1w78gs6pCsfYq%2FwMIfhAAGgw2Mzc0MjMxODM4MDUiDHUfzwCPEzdcE3YIYCrcA4OJjwFG2doX%2FlQKAetahcJjxO67kkpVNsu6dN%2FWvRdwpMwB8ypFrVbCpUSHZKVay3rQ2UwcoRU%2F%2F5Yvn2KV0SaMrTtFRMXb%2FuKQwVgVssiO6oSgH%2FB8bj8aGY0%2FzbKBlnlqPU1ct62lGw%2BXtE0usSVFKoLzr6X9UQYrDI1E3YaseI4gxay43apnZcIobA7NDQnpj5h4tbUvLsnMeSkd6HT9PZQT2TCwv0LUc8PRnjeKWOeBAtE0J7Q4U7%2B6M8PZF09yV%2BSdXTsnqv8ZvctqtmkVwsv9NXhPnhIXUnRlq%2BInhejFd2mXlxSYEZm9XqrEbt7m%2Bm%2FZKyg1zOscqlu9uhwdx1BHlr5Z%2Be1cfj%2F7uIEG3h1WEKUS8OHjUUiv6iPFmk%2F%2BtROZHEd09LFyE2xfMw9RfJfFVedP1zQNU%2BI6wszEmco%2BRJabWqOWth3gpTK71esVF7VfnEnUzmpoqpA%2BwdP9jIl5Z9fB%2BNhAS7J09DuxcWXTWpk7af7F7VjqPQ%2Fd9raSRXIAEbNtPoTYDpj7XkDlqG%2FsPd3OqAyLrx8kmSCstBpQ%2F5ItvtPTBCw94s57QVbfpvRnir1rt8TbXlrJu8ize5f0gCFh01yttaT7tCVYNDYAsaajmZPOxZ0qMMakmsQGOqUBrJ1JBGNWXwB%2Faxns5aOUlxntlpSqzNpGKFBVFdpPhgFroajGy520PRs3o3R1YrEZWh6KprSOL9x4AB2TflrwonA6b8cEOEPk3hFQ6xHytm2%2BO7Z8w20dBs5paibqdCDR6ZMqMWj2w%2BA%2Fye9EGjxyKHJftCz7g41CF2P%2FcuzN3igksHq72sjM2FjfRMEo2RIRcg3oLHPSo%2F1Cg%2Be0U4HJ97HfHy2v&X-Amz-Signature=4d14489311534057f7b4438ffc6be563a682659a4d70d9eeeedc42ebfb832a5e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" /><p></p></div><div class="column"><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/IMG_7227%201.png" alt="" class="content-image" /><h3><em><strong>The Palace</strong></em></h3><p>Video Link: https://youtu.be/LzCTLmiBhfc</p><p><strong>11'24'', Two channel video installation, transparent fabric and projections, 2023.</strong></p><p>"The Palace" is a combination of tactile experience and visual storytelling. The holographic and immersive experience render the piece both as a tutorial and a narrative, and its narrative perspective is both first person and third person. The plot adapts the story of the Emperor's New Clothes and Buddhist scriptures Śūraṅgama Sūtra; in the Emperor's New Clothes, the emperor is deceived into wearing invisible clothing, but in my story, the emperor voluntarily chooses to do so because he believes that memories from the cherished one are more important than luxurious garments made of jewels. As long as one believes, even in ruins, the treasures in one's heart will not disappear. </p><p></p></div></div>
+<img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/dc8dc046-8907-42af-87e5-9b1b544625da/MESEWHL_o.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466RQ2BEGWQ%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T214248Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJGMEQCIDOFD397ANV45h2aKWDJsgeaWgOPQzHF4mH1wnWwrozPAiBgRNyEqMvOVV0gCZkA%2BeWyBA79eIIDdJqNM62mN55h4Sr%2FAwh%2BEAAaDDYzNzQyMzE4MzgwNSIMeojgWj2utsDti62KKtwDydinatGqTatOsEVa5eabWa9QB6wCP46nsTq0iSFdU%2BDkxquPB0fdIhA%2FzcYV8EasbYNuQ8ztShT5KP9Gme4KM7vnnqQ7ibuYRWzb31KfMmckIqRAIYSyDTE5mqrTfZO5sJdf2ToBhPIX9VmqpFrVyjmo8L3eSL2kR28SWExwUsSIyypr4G2cMjF3L4sQLVktecr4Pk4MSIj7ZFOm5cNVNYHQNWs2CLHUP3BegOzwlTHHXJWiJAkdvlj8XxV9gz4HGTGH4et2v57o2Y3ZvDTAXdLO5NUq%2BEHQM61%2BVehTmJXMQWRRJu7EZfZReJCFlfaNYdp6rL4K1xd%2F8UY5wHMxpkcaAnFJ38Qu574YxfBzqdXFRYjoH5RnQXH0aTrKPx0y%2FglqMzP1AlKe0T4F3zIaGWylGnu9rX5actsyIvC65nprNu0E%2FYFuBhHS%2FBOns7dlT41BRjGxeTn1IZLsVTtjXR8pifylLHM0M5i5ZBwxMlnY00HSz%2BWLnZqixwrvLn8v4FfHeENHQbq7xguQJUiwhfJJu8VwdqQzzk8wpR4sITgfPIngXFqy3uBLlpoRE4XsZ0Okfad8vaF2jp%2B6iQfeFZsr1Z4wqpuRgKs6I%2FxUj9B%2FyxM%2B6BtkFEkn%2F%2FswnqSaxAY6pgGvSQZ5VljDQYKNoPuMrNXttFa%2BLWDPtDuCUbl8DVnDPPjKd%2FPhRFaw5QPr0%2FC5BAPfgeDz29GQCoD9rjf6crOCocg%2Fjxxoha95vIdA62N3V9irVrtdxYav%2BldVaXFFNcH49wT3Hx1HC5dgPiuFh3Ai15szt1wF%2BfvMv4fzCZV5iHlt3PxcqvEuffY99qwF5QxPc0YGgR18hv8TwfTaujJcV65gMfeE&X-Amz-Signature=6b80e7687b5a632741d8d24363084c0152881fb4a247df462a013cdfd5b246a0&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" />
+<img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/62067c1e-4b0c-420d-aa14-2577bdab1dad/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466RQ2BEGWQ%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T214248Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJGMEQCIDOFD397ANV45h2aKWDJsgeaWgOPQzHF4mH1wnWwrozPAiBgRNyEqMvOVV0gCZkA%2BeWyBA79eIIDdJqNM62mN55h4Sr%2FAwh%2BEAAaDDYzNzQyMzE4MzgwNSIMeojgWj2utsDti62KKtwDydinatGqTatOsEVa5eabWa9QB6wCP46nsTq0iSFdU%2BDkxquPB0fdIhA%2FzcYV8EasbYNuQ8ztShT5KP9Gme4KM7vnnqQ7ibuYRWzb31KfMmckIqRAIYSyDTE5mqrTfZO5sJdf2ToBhPIX9VmqpFrVyjmo8L3eSL2kR28SWExwUsSIyypr4G2cMjF3L4sQLVktecr4Pk4MSIj7ZFOm5cNVNYHQNWs2CLHUP3BegOzwlTHHXJWiJAkdvlj8XxV9gz4HGTGH4et2v57o2Y3ZvDTAXdLO5NUq%2BEHQM61%2BVehTmJXMQWRRJu7EZfZReJCFlfaNYdp6rL4K1xd%2F8UY5wHMxpkcaAnFJ38Qu574YxfBzqdXFRYjoH5RnQXH0aTrKPx0y%2FglqMzP1AlKe0T4F3zIaGWylGnu9rX5actsyIvC65nprNu0E%2FYFuBhHS%2FBOns7dlT41BRjGxeTn1IZLsVTtjXR8pifylLHM0M5i5ZBwxMlnY00HSz%2BWLnZqixwrvLn8v4FfHeENHQbq7xguQJUiwhfJJu8VwdqQzzk8wpR4sITgfPIngXFqy3uBLlpoRE4XsZ0Okfad8vaF2jp%2B6iQfeFZsr1Z4wqpuRgKs6I%2FxUj9B%2FyxM%2B6BtkFEkn%2F%2FswnqSaxAY6pgGvSQZ5VljDQYKNoPuMrNXttFa%2BLWDPtDuCUbl8DVnDPPjKd%2FPhRFaw5QPr0%2FC5BAPfgeDz29GQCoD9rjf6crOCocg%2Fjxxoha95vIdA62N3V9irVrtdxYav%2BldVaXFFNcH49wT3Hx1HC5dgPiuFh3Ai15szt1wF%2BfvMv4fzCZV5iHlt3PxcqvEuffY99qwF5QxPc0YGgR18hv8TwfTaujJcV65gMfeE&X-Amz-Signature=3e6e14194d1da0ede85aeb0a3ab26e5bd6ca100ef2774a0c4e2e26c8f30f3c7a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" />
 <p></p>
-<div class="column-list"><div class="column"><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/workshop2.png" alt="" class="content-image" /><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/R0001162.jpg" alt="" class="content-image" /></div><div class="column"><h3><em><strong>Empty Touch Workshop</strong></em></h3><p>workshop，2023-now</p><p>Using the same fictional framework of “The Palace”, the workshop is an embodied an interactive journey of the empty touch. The workshop starts with watching the video installation of “the Palace”, and then I acted as the host of “The Palace”, guide participants with various exercises: to touch objects, to extract texture from objects, to touch the space, or to use this method to experience other artworks, such as poems, films, etc.</p><p>This workshop has been hosted in UCCA Museum, New York Accent Sisters Book Store, VCUarts Graduate Candidacy Group Exhibition, Shanghai E-flow and Guangzhou Unicorn Screening Space.</p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/e455e4d7-163f-4ac9-a818-33740ff1f6df/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TW4M5P3J%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T213933Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJIMEYCIQD4cYKfKlyjImS082MB9X7uBI1KI6cILl1CY%2BCZjWO%2BlAIhAKVnezga%2BOMQ1AAK7aZz50xyTu1oMHS1l7WK72E5U29vKv8DCH4QABoMNjM3NDIzMTgzODA1Igx0Qx9Cj3XeTB6uQ8gq3ANoVXCHvEskJ0Vt81Ao%2BDVpEAqDIKRLO%2B1pA7jXa5XF0wfo%2BXazZMFbFTSY5dMvzsOAeBrn5zQG45yIA5TGFdsp4tAntfQFzVvfkppWBII6cJIUUVake4UkVhZ%2FN2HoF7ixZaqK8Xn6JuOhvTHJ32dvjuviYW8vZZ%2ByaUJfhJpwX178Rq5JijA6kLEQUQvn2eHfCtp9frHmWran5hRaUR876z8yXTwvebi1m7AwrdEcDzzp1wCKHrLK0W4FmM7jWxu2gT9oxpQ9wIdfdPnXa0AsxQ%2Fescq4pGAgmaM3di9RizxlxpUxRSO5kyugV6nd%2BkerL5NsxZVExcXoMyT0rNCV%2FonLg4WbqucramQO2Dl7ggpqs9sMGN%2BkS8NcA0bqteUW900k6lQ4YDllI3OU9EKY0WC4ZjpmLnuvuwHZCrVNvEzqU1nifoHwaItuCk6mPnnKFgBL%2Bi2ct9M3%2BYZzpc2A3PYQPEBzgoqb5QDP9KBogHbKzrcGVVpqMqSQDWa8juN5Jm3Y7dgwLF%2FDkImsQgCesiUt24kUOzDFlXsvycw%2B1OVogpKTLMQLl%2Fn4szTXZDt0rj6WwmM7P%2B4ifkQDoECilk17d5eH7mogB6o3apNV4qBdsTtW3tl4xlUWtzDnpJrEBjqkAR5Aj3Zg5fo6PFWEY3qBM5ZnQ8rYSSn2Gxa14FOXHyzFzQ%2B106L5iWShyjXWPXN8teeESLljZGVAWKliG%2BN9tjnE3jJlZ9TExpeWmmgvTJCxwraNJV7NtIAzWHJBTaihvFeD4ucn570%2BzW2r2MQ5OD4GkN%2F4GD8XKuPyCbKRISKxYfdfDO4UIZw4afkyZjXkHPAatVBNNG%2F01S39M60mvX1%2B6O9n&X-Amz-Signature=1b1897753e8e5c7051839210dc485fc9e067548037e4203840510da4a33f86bd&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" /></div></div>
+<div class="column-list"><div class="column"><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/workshop2.png" alt="" class="content-image" /><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/R0001162.jpg" alt="" class="content-image" /></div><div class="column"><h3><em><strong>Empty Touch Workshop</strong></em></h3><p>workshop，2023-now</p><p>Using the same fictional framework of “The Palace”, the workshop is an embodied an interactive journey of the empty touch. The workshop starts with watching the video installation of “the Palace”, and then I acted as the host of “The Palace”, guide participants with various exercises: to touch objects, to extract texture from objects, to touch the space, or to use this method to experience other artworks, such as poems, films, etc.</p><p>This workshop has been hosted in UCCA Museum, New York Accent Sisters Book Store, VCUarts Graduate Candidacy Group Exhibition, Shanghai E-flow and Guangzhou Unicorn Screening Space.</p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/e455e4d7-163f-4ac9-a818-33740ff1f6df/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZNBQEXFR%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T214248Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJHMEUCIFm60PqrKl42Nac8HV2p7F6ltfZOzxk%2FyopWQ3w%2F2ilaAiEA5Uw6v4t3kxFSl4O45bXErHOMHb5WD39gOrvpomNiUywq%2FwMIfhAAGgw2Mzc0MjMxODM4MDUiDHvPBjMRyN9oM%2F68FircA%2FR3w1TSrnApcymeiiCKyWf00MdXqAvHUkeiXhzJsKWFZjq7Ug1ppf%2FCHkFAtLGH2fGd%2Bk1XHYN%2F13vI2tlgL2AFvoLqwfbscwDqMF%2BziuChPo5xxIsGcBLAv9nxOIC%2BzOufYS51UZJzmfeaK3Ua8gcfBic7hLIykaFzt0Rteo582dJznAs7VJBjdxx%2B4yAkMEAiSR5fKXxXKPCC7%2BuMQQUbc3De%2BYE0IzeF6SM4NeiM1QfXKpe%2BR2aRiqX6DmeqkVLeXlkixcsl%2Baf7WRiMAoCmWiogqX8xvJa1kh%2BLQ%2BZh4TnKREt4052I5YYq4hztSjeN0e%2FIfhV2JPaa%2BpA63hMuI7WQvQp19d4xAjm%2Ff5vbfxF5mWlCaFATbKtWgi6PT49u%2BVWV2hRPPFaLQv11Mk3Clj0XRyjphf1tTYykeXPoTT566LRhhlBIKN7J1Ux8A9ExsCdWctrJgPMgQC1ktEOwwluB5JCANIO4bqFEe4RG33X7WSk3a0hDeDm%2BIkMloePRkPxw5Zd559sROvva7nvKuWY32VjRIsi1XKnGGA5Ksi0na6QTLlcuPKMPtfqKvIFca1QO%2BVyJrBSNzmDIOPUPXSM6MdyfLX2Ne7VoMM2lBNsC1k0VLpdiRj4SMOWkmsQGOqUBkG%2FVKwt6ipVUoU3k441cFDfRsKUt8ZkXSrc64GAchpP0y%2BH1lYSMVgRLliibumAgPXeffLNzjDEVB0tzrJhFR57plpbD%2FCO0xyextXOLj44uBvhffOLSdiwCyratJUV0IGOnLaucS5x%2F8mb6BfKTos7WeZhKrRZv%2B84J1ZSyOvDHHfHoASdg3EXp3l1OlXnxSFRyDRyPli2hsCCDQwhsiQ6nncxx&X-Amz-Signature=d4a4f722dbd34260f1aa3ea08adabdfecb1b565259b4d39f93ae9d8035f3be80&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" /></div></div>
 <p></p>
     </div>
   </main>
