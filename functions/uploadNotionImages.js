@@ -2,8 +2,8 @@ import { Client } from "@notionhq/client";
 import fetch from 'node-fetch';
 
 // Configuration - Replace these with your actual values
-const BUNNY_STORAGE_ZONE = 'your-storage-zone-name'; // Replace with your storage zone name
-const BUNNY_BASE_URL = 'https://your-storage-zone.b-cdn.net'; // Replace with your CDN URL
+const BUNNY_STORAGE_ZONE = 'leilei-website-2'; // Replace with your storage zone name
+const BUNNY_BASE_URL = 'https://leileixia-website.b-cdn.net'; // Replace with your CDN URL
 const BUNNY_STORAGE_API_URL = `https://storage.bunnycdn.com/${BUNNY_STORAGE_ZONE}`;
 const ROOT_FOLDER = 'artworks'; // Replace with your preferred root folder, or '' for root
 
