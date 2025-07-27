@@ -157,11 +157,32 @@ function renderBlock(block) {
   }
 }
 
+function decodeHtmlEntities(text) {
+  const entities = {
+    '&lt;': '<',
+    '&gt;': '>',
+    '&amp;': '&',
+    '&quot;': '"',
+    '&#39;': "'",
+    '&nbsp;': ' ',
+    '&lt;br&gt;': '<br>',
+    '&lt;b&gt;': '<b>',
+    '&lt;/b&gt;': '</b>',
+    '&lt;i&gt;': '<i>',
+    '&lt;/i&gt;': '</i>'
+  };
+  
+  return text.replace(/&[#\w]+;/g, (entity) => entities[entity] || entity);
+}
+
 function generateHTML({ title, slug, content, description, titleImage }, cssFileName) {
   const body = content.map(renderBlock).join('');
   
+  // Decode HTML entities in description
+  const decodedDescription = description ? decodeHtmlEntities(description) : '';
+  
   // Minify HTML by removing extra whitespace and newlines
-  const minifiedHTML = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>${title} - Leilei Xia</title><meta name="description" content="${description || title}"/><link rel="stylesheet" href="https://unpkg.com/open-props"/><link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/buttons.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/indigo.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/indigo-hsl.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/easings.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/animations.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/sizes.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/><link rel="stylesheet" href="${cssFileName}"/></head><body><nav class="page-nav"><div class="page-nav__container"><div class="nav__brand"><a href="/" class="page-nav__logo">Leilei Xia</a></div><div class="page-nav__links"><a href="/#about" class="page-nav__link">About</a><a href="/#work" class="page-nav__link">Work</a><a href="/#contact" class="page-nav__link">Contact</a></div></div></nav><main class="main-content"><a href="/" class="back-link">← Back to Portfolio</a>${titleImage ? `<img src="${titleImage}" alt="${title}" class="hero-image"/>` : ''}<h1 class="page-title">${title}</h1>${description ? `<p class="page-description">${description}</p>` : ''}<div class="content">${body}</div></main></body></html>`;
+  const minifiedHTML = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>${title} - Leilei Xia</title><meta name="description" content="${decodedDescription || title}"/><link rel="stylesheet" href="https://unpkg.com/open-props"/><link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/buttons.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/indigo.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/indigo-hsl.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/easings.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/animations.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/sizes.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/><link rel="stylesheet" href="${cssFileName}"/></head><body><nav class="page-nav"><div class="page-nav__container"><div class="nav__brand"><a href="/" class="page-nav__logo">Leilei Xia</a></div><div class="page-nav__links"><a href="/#about" class="page-nav__link">About</a><a href="/#work" class="page-nav__link">Work</a><a href="/#contact" class="page-nav__link">Contact</a></div></div></nav><main class="main-content"><a href="/" class="back-link">← Back to Portfolio</a>${titleImage ? `<img src="${titleImage}" alt="${title}" class="hero-image"/>` : ''}<h1 class="page-title">${title}</h1>${decodedDescription ? `<div class="page-description">${decodedDescription}</div>` : ''}<div class="content">${body}</div></main></body></html>`;
   
   return minifiedHTML;
 }
