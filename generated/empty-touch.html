@@ -18,296 +18,20 @@
   <link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/>
   
-  <style>
-    /* CSS Custom Properties */
-    :root {
-      --font-primary: var(--font-humanist);
-      --font-display: var(--font-humanist);
-      --color-primary: #6366f1;
-      --color-primary-dark: #4f46e5;
-      --color-accent: #f59e0b;
-      --color-text-primary: #111827;
-      --color-text-secondary: #6b7280;
-      --color-text-light: #9ca3af;
-      --color-bg-primary: #ffffff;
-      --color-bg-secondary: #f9fafb;
-      --color-bg-tertiary: #f3f4f6;
-      --color-border: #e5e7eb;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    }
-
-    /* Reset and base styles */
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: var(--font-primary);
-      line-height: 1.6;
-      color: var(--color-text-primary);
-      background: var(--color-bg-primary);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Navigation */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--color-border);
-      z-index: 1000;
-      transition: all 0.3s ease;
-    }
-
-    .nav__container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--size-4, 1rem);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 70px;
-    }
-
-    .nav__logo {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 0;
-      color: var(--color-text-primary);
-      text-decoration: none;
-    }
-
-    .nav__links {
-      display: flex;
-      gap: var(--size-6, 2rem);
-    }
-
-    .nav__link {
-      text-decoration: none;
-      color: var(--color-text-secondary);
-      font-weight: 500;
-      transition: color 0.2s ease;
-      position: relative;
-    }
-
-    .nav__link:hover {
-      color: var(--color-primary);
-    }
-
-    .nav__link::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--color-primary);
-      transition: width 0.2s ease;
-    }
-
-    .nav__link:hover::after {
-      width: 100%;
-    }
-    
-    /* Main content */
-    .main-content {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 120px var(--size-4, 1rem) var(--size-8, 3rem);
-    }
-    
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      color: var(--color-primary);
-      text-decoration: none;
-      margin-bottom: var(--size-6, 2rem);
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-    
-    .back-link:hover {
-      color: var(--color-primary-dark);
-    }
-    
-    .hero-image {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin-bottom: var(--size-6, 2rem);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    .page-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 600;
-      margin: 0 0 var(--size-4, 1.5rem) 0;
-      line-height: 1.2;
-      color: var(--color-text-primary);
-    }
-    
-    .page-description {
-      font-size: 1.2rem;
-      color: var(--color-text-secondary);
-      margin-bottom: var(--size-8, 3rem);
-      line-height: 1.6;
-    }
-    
-    .content {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--color-text-primary);
-    }
-    
-    .content p {
-      margin-bottom: var(--size-4, 1.5rem);
-    }
-    
-    .content-image {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin: var(--size-6, 2rem) 0;
-      box-shadow: var(--shadow-md);
-    }
-    
-    .content h1 {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 600;
-      margin: var(--size-8, 3rem) 0 var(--size-4, 1.5rem) 0;
-      color: var(--color-text-primary);
-    }
-    
-    .content h2 {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin: var(--size-6, 2rem) 0 var(--size-3, 1rem) 0;
-      color: var(--color-text-primary);
-    }
-    
-    .content h3 {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin: var(--size-4, 1.5rem) 0 var(--size-2, 0.75rem) 0;
-      color: var(--color-text-primary);
-    }
-    
-    .content blockquote {
-      border-left: 4px solid var(--color-primary);
-      padding-left: var(--size-4, 1.5rem);
-      margin: var(--size-6, 2rem) 0;
-      font-style: italic;
-      color: var(--color-text-secondary);
-      background: var(--color-bg-secondary);
-      padding: var(--size-4, 1.5rem);
-      border-radius: 8px;
-    }
-    
-    .content pre {
-      background: var(--color-bg-secondary);
-      padding: var(--size-4, 1.5rem);
-      border-radius: 12px;
-      overflow-x: auto;
-      border: 1px solid var(--color-border);
-    }
-    
-    .content code {
-      background: var(--color-bg-tertiary);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 0.9em;
-    }
-    
-    .content pre code {
-      background: none;
-      padding: 0;
-    }
-    
-    .content ul, .content ol {
-      padding-left: var(--size-6, 2rem);
-      margin-bottom: var(--size-4, 1.5rem);
-    }
-    
-    .content li {
-      margin-bottom: var(--size-2, 0.75rem);
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .nav__links {
-        display: none;
-      }
-      
-      .nav__container {
-        justify-content: center;
-      }
-      
-      .main-content {
-        padding: 100px var(--size-3, 0.75rem) var(--size-6, 2rem);
-      }
-      
-      .hero-image {
-        height: 250px;
-        border-radius: 12px;
-      }
-      
-      .page-title {
-        font-size: 2rem;
-      }
-      
-      .page-description {
-        font-size: 1.1rem;
-      }
-      
-      .content {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .nav__container {
-        height: 60px;
-      }
-      
-      .main-content {
-        padding: 80px var(--size-2, 0.5rem) var(--size-4, 1.5rem);
-      }
-      
-      .hero-image {
-        height: 200px;
-      }
-    }
-  </style>
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="/src/style.css"/>
 </head>
 <body>
   <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav__container">
+  <nav class="page-nav">
+    <div class="page-nav__container">
       <div class="nav__brand">
-        <a href="/" class="nav__logo">Leilei Xia</a>
+        <a href="/" class="page-nav__logo">Leilei Xia</a>
       </div>
-      <div class="nav__links">
-        <a href="/#about" class="nav__link">About</a>
-        <a href="/#work" class="nav__link">Work</a>
-        <a href="/#contact" class="nav__link">Contact</a>
+      <div class="page-nav__links">
+        <a href="/#about" class="page-nav__link">About</a>
+        <a href="/#work" class="page-nav__link">Work</a>
+        <a href="/#contact" class="page-nav__link">Contact</a>
       </div>
     </div>
   </nav>
@@ -323,12 +47,11 @@
     <p class="page-description">how to touch something without touching anything?</p>
     
     <div class="content">
-      
-<img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/dc8dc046-8907-42af-87e5-9b1b544625da/MESEWHL_o.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4667M3R25IE%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T205227Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEE8aCXVzLXdlc3QtMiJIMEYCIQC%2FsOIvdvmNLtLl%2FoHMzuwViMAHk1ogJaAC5C0V8lsTpQIhAPF7ILBoDZAbHAzA266j%2BKsYSVuuMUHhe1a%2Bj1Fs1DgNKv8DCHgQABoMNjM3NDIzMTgzODA1IgyFSc5VDApU7jtOhqAq3APuuhU1hHE9N%2F79p6GciPL6%2B6wUUShMugUMLiQjyeaQXboUILRPlQhGjcq2Mq6fbjNIYI%2BJOMFMggImT0bbdGjLb2UbQyIduj1tjavN7ngEWt0Y7IoOfCLI0zOjB0%2B1r3afZCH3Lbrz5S2SkkVkiPFkrsO5pCYzfaFpJ8uIMZDovnIE3R7dxcw%2BakdzEcw8JPWbBOJxB8eTgyliCkIYpFBk94xSg%2FSj3bZjzltlnYJjX6lRp9j61FOVaTOTfsPtNUXnA8y7khnFTlA7QOVjU0pzyd40REOp0eoAlMiZumWZrohgcfyeNr9OVCTRQMsEz%2FeWbOITeRc%2Fh60OqbafDaoZRaNM65FUNpeIwlzasX5VZe7UB4IARbhsS6meolB0wTc%2Bmry8y2gpu2X%2BwsLGICEgWSUOKBAeYUZgFmY4USTqZ9eN20SgZ6RKKP7t1zwfGM%2BDCj%2B%2Fm2haTkolDf0p%2Bpsg4vK6SzShqkaikW5n0Lz7XVviWPL9E335bZv37eBfF3qUV9X9WceEwhL0kCmOXLk%2BA0l9MDuOEYAXgqlxix%2B4wk7yLAj5lKURgGb%2FBDcqgRVYF0rRq0rxUfV%2F7fLuUJolvO292B7r0fPlrJf6oLDHRjVpHCpPRTKvvQ%2BgiTDb%2FZjEBjqkAVUwUPz49%2FD7khHxWwZd%2FBReyScumxVXh5PPFOjWCSX5bgWkwxNmyC3VYSYY3EmBddV2rqZfDFgEJZ5LdPO0fnBQHbv6MctHCSVLxkO9ACvlIFjYiiuksvh%2FkinA4lNlatqXi4lYPPXBMEm25Z4GZAoriO5Wf59Lgf3i%2FJn1lc1Vltq%2FNAULXTKe3vSpuXzeIxkJOMxOhdFiWIUO%2BY8Z5Ka%2Fy%2BvT&X-Amz-Signature=adb77da5d8128144727123202148085c5ff05690419cd187e7d738325abdda5e&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" />
-<img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/62067c1e-4b0c-420d-aa14-2577bdab1dad/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4667M3R25IE%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T205227Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEE8aCXVzLXdlc3QtMiJIMEYCIQC%2FsOIvdvmNLtLl%2FoHMzuwViMAHk1ogJaAC5C0V8lsTpQIhAPF7ILBoDZAbHAzA266j%2BKsYSVuuMUHhe1a%2Bj1Fs1DgNKv8DCHgQABoMNjM3NDIzMTgzODA1IgyFSc5VDApU7jtOhqAq3APuuhU1hHE9N%2F79p6GciPL6%2B6wUUShMugUMLiQjyeaQXboUILRPlQhGjcq2Mq6fbjNIYI%2BJOMFMggImT0bbdGjLb2UbQyIduj1tjavN7ngEWt0Y7IoOfCLI0zOjB0%2B1r3afZCH3Lbrz5S2SkkVkiPFkrsO5pCYzfaFpJ8uIMZDovnIE3R7dxcw%2BakdzEcw8JPWbBOJxB8eTgyliCkIYpFBk94xSg%2FSj3bZjzltlnYJjX6lRp9j61FOVaTOTfsPtNUXnA8y7khnFTlA7QOVjU0pzyd40REOp0eoAlMiZumWZrohgcfyeNr9OVCTRQMsEz%2FeWbOITeRc%2Fh60OqbafDaoZRaNM65FUNpeIwlzasX5VZe7UB4IARbhsS6meolB0wTc%2Bmry8y2gpu2X%2BwsLGICEgWSUOKBAeYUZgFmY4USTqZ9eN20SgZ6RKKP7t1zwfGM%2BDCj%2B%2Fm2haTkolDf0p%2Bpsg4vK6SzShqkaikW5n0Lz7XVviWPL9E335bZv37eBfF3qUV9X9WceEwhL0kCmOXLk%2BA0l9MDuOEYAXgqlxix%2B4wk7yLAj5lKURgGb%2FBDcqgRVYF0rRq0rxUfV%2F7fLuUJolvO292B7r0fPlrJf6oLDHRjVpHCpPRTKvvQ%2BgiTDb%2FZjEBjqkAVUwUPz49%2FD7khHxWwZd%2FBReyScumxVXh5PPFOjWCSX5bgWkwxNmyC3VYSYY3EmBddV2rqZfDFgEJZ5LdPO0fnBQHbv6MctHCSVLxkO9ACvlIFjYiiuksvh%2FkinA4lNlatqXi4lYPPXBMEm25Z4GZAoriO5Wf59Lgf3i%2FJn1lc1Vltq%2FNAULXTKe3vSpuXzeIxkJOMxOhdFiWIUO%2BY8Z5Ka%2Fy%2BvT&X-Amz-Signature=92b5d16a8bfb521e1e2122ccc40ce8f7c3c3ea94d577163f561a7980fed373c3&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" />
+      <div class="column-list"><div class="column"><h3>Empty Touch</h3><p>“Empty touch” is a tactile experience I discovered that can simulate the feeling of touching something by reenacting the gesture of touching the object guided, by verbal or visual cues. This project contains a video installation and a workshop series</p><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/empty%20touch.png" alt="" class="content-image" /><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/1bcaf097-a93a-4b97-a50b-746128ce661d/8db9ffcf-6a00-495c-bbfc-6cd81fc6a2d1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466QG426PBX%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T211135Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJHMEUCIFREtoIMoM%2BV0mTGWiarqUWlPuVgiaFsQX0QD37xmwOfAiEA3nDiXyWnMaJc3pqiJx%2BUvoEejm4q8brTEhC1qvITuPQq%2FwMIfhAAGgw2Mzc0MjMxODM4MDUiDAlQb2vowJd1Zc5J4CrcA9MEOBR1Fw4FK%2BUCo11o0ydS2W5zR6itYcZ%2BDvO0hYy5Qy%2F4cNdz199nfjfjr4fqn0bzeWjk%2BQstBnqn44BvK8Ml6mZCDRQ43z8CN2CBpL6V9QAp22Q7dRG6C0povOI9ys4%2BY0fpyXXEpkax3NZBhUFMGW1L24Wy1P0o8PPHWNNWXSJenG9RcyAizECQM6l20zXJjXjPlpE6MFi7eMiRkWFkKSGfdRUHO6jj6W52Ki8gaMvk%2BCAXOUaqrad8EkdXSm7xjvrujKbBEsPCrn4lNRMC43Ai1WR6lsrdlVM2u7sXsGW4HuctbO%2FFA0IIL73kNne8hf1V341jC6KnyPBQSK%2BuLMryoT7bSPpdTW3clx%2FOjtGcBVzp8Pj0FL9%2FSwTJCXnUEWfO5f5VcJ8uRbQubVtom%2BJ6hWRPCEf4ICtPYWxhBeIngiGQxsvOMtKrYLE%2B1m9Rg5LELJo7Gbm1sVTMDcx9zHpy0KTpSMWTAjwBFXw2BeZzqACC3r%2Fwqav1IjBW2GdoBrEDP28fb%2FKPxMr0HA91mfBdo%2F605Q86JIch9VSLMz2BgcsSNjBUkHF3GE1vUItOi2DAxRL8gt1WryTKtL1luanuhZbOtnDIA%2FYqZDgqISoaUId9zktIWZNBMP2jmsQGOqUBjiUQ3MRbe5Izk0a93VKt%2Bp%2F0O%2BljB8xC19LMZLBFJyGTMNk2Qd5EpRCU2PoQL4Jost55xBbFrCEA7Y1vV3Sa2irOL%2BT77KWa%2B2cpyRj2XpYRWU9OV5E7NiDejpKZufR%2BiVejRLC2vEXxjR4ygMY%2FUNOJzMqOstrfQf599%2FqV1Dg6oBLH8IVFL2phgaqjf4uT2TRm8CJzAR78YWbiMiWhh4DEgAdO&X-Amz-Signature=68c76d4544ded357d0a20145f4aee7f882738dcfa6ce295b758af58da32403d6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" /><p></p></div><div class="column"><img src="https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/IMG_7227%201.png" alt="" class="content-image" /><h3><em><strong>The Palace</strong></em></h3><p>Video Link: https://youtu.be/LzCTLmiBhfc</p><p><strong>11'24'', Two channel video installation, transparent fabric and projections, 2023.</strong></p><p>"The Palace" is a combination of tactile experience and visual storytelling. The holographic and immersive experience render the piece both as a tutorial and a narrative, and its narrative perspective is both first person and third person. The plot adapts the story of the Emperor's New Clothes and Buddhist scriptures Śūraṅgama Sūtra; in the Emperor's New Clothes, the emperor is deceived into wearing invisible clothing, but in my story, the emperor voluntarily chooses to do so because he believes that memories from the cherished one are more important than luxurious garments made of jewels. As long as one believes, even in ruins, the treasures in one's heart will not disappear. </p><p></p></div></div>
+<img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/dc8dc046-8907-42af-87e5-9b1b544625da/MESEWHL_o.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4663JJP355D%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T211135Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJHMEUCIQDEBkZ5pBBBy4gNO0kn7R9YCSxQPAVM2DCWWkOSA0mDUAIgF8KIgidTFMHefC0I3NlAHzw2YOtwEDAwOUhI789jZQUq%2FwMIfhAAGgw2Mzc0MjMxODM4MDUiDLN1P%2BJxE3GxnVWt9ircA21vRgHjmCoui08U4Lus1HC1NaX2qkbHJFJtUHmhffoDgxSPMxl%2BwoBYrNqQ8kfAU1OPIA0UbyChhmMcgHb2ZQOzgiXag%2FGJKFedbnWX5eugXgC8IKPBT6BWdQTfxfFIizb2yJk02IwARKH8aO1Aoslx1EnJvGkbnWYDkhrz%2F1QB4dO6HUMHFUmdF8vMssIVU7Q605YrYxUTCNV%2FCGIg5YmPNMmwY%2BLMEx9O9LXheZSuAS9t4GPhBLkDdprsNkvSJxoZgyQhHiU5wIBKjUzVy%2Bb030bwSGRXM6prUEadVBU96V59NQ57NtwT2SnR0bV%2BFv%2FvxyvkpFa%2FkFdRNuHJpdJYtURSdt5cIUqQI2%2FS1H9uqtAw%2F4QbcyQM8Nzla88Tm2PuABcSt%2BOdqridfpEpJYr%2Fk5GPRAJ0gcjqwEeBOdsf26cNHxtrhsrLO8g%2FCfjVXP%2FKM6w7PEQ%2FNu6jg1kW646%2BIqhIWRweUHIOzFPzykr%2Fn8YlkCDWIjQAe0vj0YseSaGRCgAr483Ra1JLP6ls32cTio5mj9bgPnvLNG%2BGbFRirinTrcNsidJMhkY50gO5asg8vb0lrFvKBBsXPLcp64zUipszh5GjFu0inBcNHdkItzjuagC808fNrJr1MMWkmsQGOqUBKcYKbdhwyMaqfuRxWoTvt5bUvFyol7BLaosNpe9hSYADfzfHcRzZdCpQugMesrdGFpx1Fq72VRnK74ltSiI0vxSzh40%2BV3wg18%2BSxHXW4xavqAHU68n5GZLj0p86s3z9xhn3%2FEVizlpJX7yHQvMnfF6pZ9vDGeyLtGnkHwWQcp%2FeL%2FBNfcnpNFwUAkT6BGJKF8EnkTk8aeve6zy5ssEdBcq%2FRn9Z&X-Amz-Signature=c80b29d5c45a55c700f6f525088f589623e95a6f5216301bab9d5643c74d4245&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" />
+<img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/62067c1e-4b0c-420d-aa14-2577bdab1dad/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4663JJP355D%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T211135Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJHMEUCIQDEBkZ5pBBBy4gNO0kn7R9YCSxQPAVM2DCWWkOSA0mDUAIgF8KIgidTFMHefC0I3NlAHzw2YOtwEDAwOUhI789jZQUq%2FwMIfhAAGgw2Mzc0MjMxODM4MDUiDLN1P%2BJxE3GxnVWt9ircA21vRgHjmCoui08U4Lus1HC1NaX2qkbHJFJtUHmhffoDgxSPMxl%2BwoBYrNqQ8kfAU1OPIA0UbyChhmMcgHb2ZQOzgiXag%2FGJKFedbnWX5eugXgC8IKPBT6BWdQTfxfFIizb2yJk02IwARKH8aO1Aoslx1EnJvGkbnWYDkhrz%2F1QB4dO6HUMHFUmdF8vMssIVU7Q605YrYxUTCNV%2FCGIg5YmPNMmwY%2BLMEx9O9LXheZSuAS9t4GPhBLkDdprsNkvSJxoZgyQhHiU5wIBKjUzVy%2Bb030bwSGRXM6prUEadVBU96V59NQ57NtwT2SnR0bV%2BFv%2FvxyvkpFa%2FkFdRNuHJpdJYtURSdt5cIUqQI2%2FS1H9uqtAw%2F4QbcyQM8Nzla88Tm2PuABcSt%2BOdqridfpEpJYr%2Fk5GPRAJ0gcjqwEeBOdsf26cNHxtrhsrLO8g%2FCfjVXP%2FKM6w7PEQ%2FNu6jg1kW646%2BIqhIWRweUHIOzFPzykr%2Fn8YlkCDWIjQAe0vj0YseSaGRCgAr483Ra1JLP6ls32cTio5mj9bgPnvLNG%2BGbFRirinTrcNsidJMhkY50gO5asg8vb0lrFvKBBsXPLcp64zUipszh5GjFu0inBcNHdkItzjuagC808fNrJr1MMWkmsQGOqUBKcYKbdhwyMaqfuRxWoTvt5bUvFyol7BLaosNpe9hSYADfzfHcRzZdCpQugMesrdGFpx1Fq72VRnK74ltSiI0vxSzh40%2BV3wg18%2BSxHXW4xavqAHU68n5GZLj0p86s3z9xhn3%2FEVizlpJX7yHQvMnfF6pZ9vDGeyLtGnkHwWQcp%2FeL%2FBNfcnpNFwUAkT6BGJKF8EnkTk8aeve6zy5ssEdBcq%2FRn9Z&X-Amz-Signature=9961ff01d3dd83cdf6eca628e72a7812f3a04b7b385b50eefe397aba2ea7084f&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" />
 <p></p>
-
-<img src="https://leileixia-website.b-cdn.net/%E6%89%8B%E8%AF%AD%E5%B0%81%E9%9D%A2%E5%B0%81%E5%BA%95.jpg" alt="" class="content-image" />
+<div class="column-list"><div class="column"><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/80ce52ad-9923-4dcc-9609-6feb115dd3af/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4666PMKHQTD%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T211136Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJIMEYCIQDTUmwfadTd3Bhxan9JKCVqTrWjL7eYNJt9TaWipMq3rwIhAL2tWYgVKHiOi3XhLzsnfQckRlbdYAEN2xaUueSUmQ5dKv8DCH4QABoMNjM3NDIzMTgzODA1IgyBCxEkCyhEQ79r19Yq3AND4Gxb2lB1VvXoOJcnVySDBXOq0ytv%2Fte28j9foVOCYGPsHj6Wei0msHtG8IIdG7jAhaQedFqPF2osA0NDzrFTRnyY5FbOR4IFBKkjltFXu8sb1bwDDWNi1bXuiTsnQEaGnPvsGozgqOvgdILhOBPhjEZT3k1EFpYz6vXPv660gQ6it%2FkHgsjkV8mmhLpL2yieTvfSB7F91fP440LJCexMmJxlt5wFrBL4wgfroVzvdfy2aa53d8QyIFGWjQkUe8ULvXzMtIpp%2F6ygy9rP5IgcRWV4cAoITG1F0x%2FaCEAd8U2sg6lP%2BxWNpWVPfCQIRi5PjY%2BJ69tRW5DJLj0a%2BHoMSY4p5R3qtPRzC%2F8NAs%2B%2BpSeipbB81Xv%2FUQcJNO0dc6DFtvaKS6HExHG34ClemvTmUv0z7vkL0P7FopDzoKz0DCnoTDzbldkXZxq6vM9JByEZDsmv1Nrm7H%2FtZuScgr4pBfofJp3IGEzoUPExi4iL5MQopCIuPuyoBMURs1Lz7kMYVG%2Ftsq2XnDKz7cKthl0UkXOIH5OqVDV7iiMx6OKWePPpMIWAZhD34DHVyx3LXICVpGhCj3vQ6XyqzpUDnTHRsyEatUzcjoAkOe%2F7Vr%2Bpuooy1N07%2FCbFRb2X1TCro5rEBjqkAX8bYquT2gsIjuFBKx4kCUl2OW2BUjFxegAJio1FD9jNDUKg3Csl%2BldqtissNUz9vRJnLUgp6HgenneGCZ9p95l7YFiMduJ0H8uMTaCpbgDlat4ymGMOn%2FjMlHm3YxMys0io9%2F9oqJ8d69k4espibQbjEt69l6jMHQmDc3E9DXUb2s8JOONILR97QC%2Fq4DBlY0vkl%2B7nu2pN1PkvaqM9OUYy3D%2BY&X-Amz-Signature=820829afdbb10f45f00ab79388d6d7aca4284e47ada244cfd8eb436a70a62408&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" /></div><div class="column"><h3><em><strong>Empty Touch Workshop</strong></em></h3><p>workshop，2023-now</p><p>Using the same fictional framework of “The Palace”, the workshop is an embodied an interactive journey of the empty touch. The workshop starts with watching the video installation of “the Palace”, and then I acted as the host of “The Palace”, guide participants with various exercises: to touch objects, to extract texture from objects, to touch the space, or to use this method to experience other artworks, such as poems, films, etc.</p><p>This workshop has been hosted in UCCA Museum, New York Accent Sisters Book Store, VCUarts Graduate Candidacy Group Exhibition, Shanghai E-flow and Guangzhou Unicorn Screening Space.</p><img src="https://prod-files-secure.s3.us-west-2.amazonaws.com/da4c93e5-edb4-498c-ac50-2405f522cd09/e455e4d7-163f-4ac9-a818-33740ff1f6df/image.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466VVXWQJTG%2F20250727%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250727T211136Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFUaCXVzLXdlc3QtMiJIMEYCIQC0qat4gNdF0oE4%2FAZ0CWs%2BzDf5GLKuCOtur55Z7GGtKAIhAOjI4D%2Bkaj4EMfZnT243wK8QNv0HQnmHnJaSmUAGsPcHKv8DCH4QABoMNjM3NDIzMTgzODA1IgzwDMPlpS8dr62cJ8Mq3ANM%2BMAYjs9F6Z9mTSHuyA49ujK5%2Fu8BvpaZtLiE6hbx9veA1aBfLAz7UlwglT%2FhOzHUNGwBPg79SR4zwK9DB2LgDm32TM6PtFlGMpabXYZ0igwtYO1l5VaSpf%2BAXpwyO2kD5ukqFtWim3AXtA0rQKpyr%2Ft9RmWg5wsQHO86GV%2FZkx7kze6nqmKsUsr7GyK0NglGQJtLscvRKcCbaaqzdHm6sMwVHqd132DDDgv60Ifld0Gj8r08Qc2XGYEn4%2BGtDjPZoT4DBPYM%2By%2B7FbsDx3%2BythueeDv%2BVYruew%2Fd8bh82t%2BaoTkIwQhLZhBlKPGBiGsLAV1SAcn1YjoU10e9copGivt4xuenKS7Rnh%2Bj%2BVSlXkYNZRrzm9UUNwRoMP82nKEJo2KuJeHoPO%2BgvA5BUAsEkrn%2FVwPZQ8%2B4LOdQ9GhT9PqiLdWGBkTxMYmHONKuITETwTBj81j%2Fec7cMNe6pB3Pc37BmL6C9uhO9q5B6JPht18cNvMKmTOFXmnXCZ9CSp5t%2FWNOVJXgo%2F1A15mzgNnmHuAdwsxFuG478JphZGe2uCVzAmJLaB41moqAgNtPkj8%2BP%2BUcCuUAuaLojReC8hC4WvD%2B051ssV3LRDHDd3zkpGzgVa9rILTYau36JzCro5rEBjqkAeZ%2FUoaEZ5UOX1IafenYNaryLlg9QBsF6j6ZGB9bvlG6EGYvUsRXGXHYVypwg647e9ZbcrDzRPFrkACbiiwtbgQjApFN8LGniFe%2BJ6uCRE8lIUFM0KKRWuSVSRXV9RYxj2w%2B6ZW%2Fpg76sMuRDHA5GgCfkxx1%2BwWJG15n7jC9H7ptUYsCZO0IAQKge3feK2Te2ZodYoBo9zyJs%2FFuoMxsTMfJrxud&X-Amz-Signature=0eb409374d6095bd40aa76d50f71f14a850a873666cbfdf8497ee4a7f8120471&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject" alt="" class="content-image" /></div></div>
     </div>
   </main>
 </body>

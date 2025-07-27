@@ -647,10 +647,12 @@ body {
 .page-title {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 600;
+  font-weight: 450;
   margin: 0 0 var(--size-4, 1.5rem) 0;
   line-height: 1.2;
   color: var(--color-text-primary);
+  right:0;
+  display: block; /* Ensure it's block-level */
 }
 
 .page-description {
@@ -664,6 +666,9 @@ body {
   font-size: 1.1rem;
   line-height: 1.7;
   color: var(--color-text-primary);
+
+  /*-----------------some content variable-----------------*/
+  --bold:500;
 }
 
 .content p {
@@ -681,7 +686,7 @@ body {
 .content h1 {
   font-family: var(--font-display);
   font-size: 2.2rem;
-  font-weight: 600;
+  font-weight: var(--bold);
   margin: var(--size-8, 3rem) 0 var(--size-4, 1.5rem) 0;
   color: var(--color-text-primary);
 }
@@ -689,7 +694,7 @@ body {
 .content h2 {
   font-family: var(--font-display);
   font-size: 1.8rem;
-  font-weight: 600;
+  font-weight: var(--bold);
   margin: var(--size-6, 2rem) 0 var(--size-3, 1rem) 0;
   color: var(--color-text-primary);
 }
@@ -697,7 +702,7 @@ body {
 .content h3 {
   font-family: var(--font-display);
   font-size: 1.4rem;
-  font-weight: 600;
+  font-weight: var(--bold);
   margin: var(--size-4, 1.5rem) 0 var(--size-2, 0.75rem) 0;
   color: var(--color-text-primary);
 }
