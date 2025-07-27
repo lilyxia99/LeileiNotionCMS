@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUTPUT_DIR = path.resolve(__dirname, '../generated');
 const NOTION_KEY = process.env; // adjust as needed
 
+
 function convertRichText(richText = []) {
   return richText
     .map(({ plain_text, annotations }) => {
