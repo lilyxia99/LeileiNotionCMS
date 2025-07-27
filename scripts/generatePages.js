@@ -118,7 +118,8 @@ function renderBlock(block) {
       return `<p>${convertRichText(block.paragraph?.rich_text)}</p>`;
     case 'image':
       const imageUrl = block.image?.external?.url || block.image?.file?.url || '';
-      return `<img src="${imageUrl}" alt="" class="content-image" />`;
+      const altText = convertRichText(block.image?.caption || []);
+      return `<img src="${imageUrl}" alt="${altText}" class="content-image" />`;
     case 'video':
       const videoUrl = block.video?.external?.url || block.video?.file?.url || '';
       if (videoUrl) {
