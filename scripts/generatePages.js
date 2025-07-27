@@ -14,20 +14,34 @@ function extractPageCSS() {
     const cssPath = path.resolve(__dirname, '../src/style.css');
     const fullCSS = fs.readFileSync(cssPath, 'utf8');
     
-    // Extract only page-specific CSS (Generated Page Styles section)
-    const pageCSSSections = [
-      /\/\* Generated Page Styles \*\/[\s\S]*?(?=\/\* Generated Page Responsive Design \*\/)/,
-      /\/\* Generated Page Responsive Design \*\/[\s\S]*?(?=@media \(max-width: 480px\))/,
+    // Extract CSS custom properties and essential styles for pages
+    const essentialSections = [
+      // CSS Custom Properties
+      /:root\s*{[^}]*}/,
+      // Reset and base styles
+      /\*\s*{\s*box-sizing:\s*border-box;\s*}/,
+      /html\s*{[^}]*}/,
+      /body\s*{[^}]*}/,
+      // Generated Page Styles section
+      /\/\* Generated Page Styles \*\/[\s\S]*?(?=\/\* Generated Page Responsive Design \*\/|$)/,
+      // Generated Page Responsive Design section
+      /\/\* Generated Page Responsive Design \*\/[\s\S]*?(?=@media \(max-width: 480px\)|$)/,
+      // Final mobile responsive section
       /@media \(max-width: 480px\)[\s\S]*?(?=\n\s*\/\*|$)/
     ];
     
     let pageCSS = '';
-    pageCSSSections.forEach(regex => {
+    essentialSections.forEach(regex => {
       const match = fullCSS.match(regex);
       if (match) {
         pageCSS += match[0] + '\n';
       }
     });
+    
+    // If no sections found, include the entire CSS (fallback)
+    if (!pageCSS.trim()) {
+      pageCSS = fullCSS;
+    }
     
     // Minify CSS by removing comments, extra whitespace, and newlines
     return pageCSS
