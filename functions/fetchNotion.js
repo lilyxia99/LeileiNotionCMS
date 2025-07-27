@@ -18,7 +18,13 @@ export default async (req) => {
         status: {
           equals: "done"
         }
-      }
+      },
+      sorts: [
+        {
+          property: "ordering",
+          direction: "ascending"
+        }
+      ]
     });
 
     console.log("✅ Fetched data from Notion");

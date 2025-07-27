@@ -84,6 +84,15 @@ function convertRichText(richText = []) {
     .join('');
 }
 
+function escapeHtmlAttribute(text) {
+  return text
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/&/g, '&amp;');
+}
+
 function convertToEmbedUrl(url) {
   // YouTube URL conversion
   if (url.includes('youtube.com') || url.includes('youtu.be')) {
@@ -118,7 +127,7 @@ function renderBlock(block) {
       return `<p>${convertRichText(block.paragraph?.rich_text)}</p>`;
     case 'image':
       const imageUrl = block.image?.external?.url || block.image?.file?.url || '';
-      const altText = convertRichText(block.image?.caption || []);
+      const altText = escapeHtmlAttribute(convertRichText(block.image?.caption || []));
       return `<img src="${imageUrl}" alt="${altText}" class="content-image" />`;
     case 'video':
       const videoUrl = block.video?.external?.url || block.video?.file?.url || '';

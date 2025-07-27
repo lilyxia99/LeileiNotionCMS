@@ -8,9 +8,16 @@ async function fetchDataFromAPIEndPoint(){
     
     console.log(cards);
     
+    // Sort cards by ordering property
+    const sortedCards = cards.sort((a, b) => {
+      const orderA = a.properties.ordering?.number || 999;
+      const orderB = b.properties.ordering?.number || 999;
+      return orderA - orderB;
+    });
+    
     const cardContainer = document.querySelector('#app');
-    if (cardContainer && cards && cards.length > 0) {
-      cardContainer.innerHTML = cards.map((card) => {
+    if (cardContainer && sortedCards && sortedCards.length > 0) {
+      cardContainer.innerHTML = sortedCards.map((card) => {
         const imageUrl = card.properties.titleImage?.files?.[0]?.external?.url || '';
         const title = card.properties.Name?.title?.[0]?.plain_text || 'Untitled';
         const description = card.properties.description?.rich_text?.[0]?.plain_text || 'No description available';
