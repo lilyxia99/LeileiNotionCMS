@@ -38,6 +38,8 @@ export default async (req, context) => {
           slug: page.slug,
           description: page.description,
           titleImage: page.titleImage,
+          tag:page.tag,
+          type:page.type,
           content: blocks.results,
         };
       })

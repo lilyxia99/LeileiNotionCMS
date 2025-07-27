@@ -385,6 +385,14 @@ function generateHTML({ title, slug, content, description, titleImage }) {
 
 async function run() {
   try {
+    // Import dotenv to load local environment variables
+    try {
+      const dotenv = await import('dotenv');
+      dotenv.config();
+    } catch (e) {
+      // dotenv not available, continue without it
+    }
+
     // Try local development server first, then fallback to deployed URL
     let apiUrl = 'http://localhost:8888/api/getPage';
     let response;
