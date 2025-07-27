@@ -8,6 +8,17 @@ const OUTPUT_DIR = process.env.NODE_ENV === 'production'
   ? path.resolve(__dirname, '../dist/generated')
   : path.resolve(__dirname, '../generated');
 
+// Read the main CSS file to inline it
+function getMainCSS() {
+  try {
+    const cssPath = path.resolve(__dirname, '../src/style.css');
+    return fs.readFileSync(cssPath, 'utf8');
+  } catch (error) {
+    console.warn('Could not read main CSS file:', error.message);
+    return '';
+  }
+}
+
 function convertRichText(richText = []) {
   return richText
     .map(({ plain_text, annotations }) => {
@@ -64,6 +75,8 @@ function renderBlock(block) {
 
 function generateHTML({ title, slug, content, description, titleImage }) {
   const body = content.map(renderBlock).join('\n');
+  const mainCSS = getMainCSS();
+  
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,8 +97,10 @@ function generateHTML({ title, slug, content, description, titleImage }) {
   <link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/>
   
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="/src/style.css"/>
+  <!-- Main Stylesheet - Inlined -->
+  <style>
+    ${mainCSS}
+  </style>
 </head>
 <body>
   <!-- Navigation -->

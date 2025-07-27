@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run copy:generated",
+    "build": "vite build && npm run generate:pages && npm run copy:generated",
     "preview": "vite preview",
     "generate:pages": "node scripts/generatePages.js",
     "copy:generated": "mkdir -p dist/generated && cp -r generated/* dist/generated/ 2>/dev/null || true"
