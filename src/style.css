@@ -297,8 +297,10 @@ body {
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--size-8, 3rem);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--size-6, 2rem);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 /* Enhanced Card Styles */
@@ -333,7 +335,7 @@ body {
 
 .card__image {
   width: 100%;
-  height: 250px;
+  height: 200px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
@@ -358,21 +360,22 @@ body {
 }
 
 .card__content {
-  padding: var(--size-6, 2rem);
+  padding: var(--size-4, 1.5rem);
 }
 
 .card__title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  margin: 0 0 var(--size-3, 1rem) 0;
+  margin: 0 0 var(--size-2, 0.75rem) 0;
   color: var(--color-text-primary);
 }
 
 .card__description {
   color: var(--color-text-secondary);
   line-height: 1.6;
-  margin: 0 0 var(--size-4, 1.5rem) 0;
+  margin: 0 0 var(--size-3, 1rem) 0;
+  font-size: 0.95rem;
 }
 
 .card__tags {
@@ -462,8 +465,9 @@ body {
   }
   
   .card-container {
-    grid-template-columns: 1fr;
-    gap: var(--size-6, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4, 1.5rem);
   }
   
   .about__skills {
