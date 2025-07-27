@@ -8,15 +8,49 @@ const OUTPUT_DIR = process.env.NODE_ENV === 'production'
   ? path.resolve(__dirname, '../dist/generated')
   : path.resolve(__dirname, '../generated');
 
-// Read the main CSS file to inline it
-function getMainCSS() {
+// Extract and minify page-specific CSS
+function extractPageCSS() {
   try {
     const cssPath = path.resolve(__dirname, '../src/style.css');
-    return fs.readFileSync(cssPath, 'utf8');
+    const fullCSS = fs.readFileSync(cssPath, 'utf8');
+    
+    // Extract only page-specific CSS (Generated Page Styles section)
+    const pageCSSSections = [
+      /\/\* Generated Page Styles \*\/[\s\S]*?(?=\/\* Generated Page Responsive Design \*\/)/,
+      /\/\* Generated Page Responsive Design \*\/[\s\S]*?(?=@media \(max-width: 480px\))/,
+      /@media \(max-width: 480px\)[\s\S]*?(?=\n\s*\/\*|$)/
+    ];
+    
+    let pageCSS = '';
+    pageCSSSections.forEach(regex => {
+      const match = fullCSS.match(regex);
+      if (match) {
+        pageCSS += match[0] + '\n';
+      }
+    });
+    
+    // Minify CSS by removing comments, extra whitespace, and newlines
+    return pageCSS
+      .replace(/\/\*[\s\S]*?\*\//g, '') // Remove comments
+      .replace(/\s+/g, ' ') // Replace multiple whitespace with single space
+      .replace(/;\s*}/g, '}') // Remove semicolon before closing brace
+      .replace(/\s*{\s*/g, '{') // Remove spaces around opening brace
+      .replace(/;\s*/g, ';') // Remove spaces after semicolons
+      .replace(/,\s*/g, ',') // Remove spaces after commas
+      .trim();
   } catch (error) {
     console.warn('Could not read main CSS file:', error.message);
     return '';
   }
+}
+
+// Create minified page CSS file
+function createPageCSSFile() {
+  const pageCSS = extractPageCSS();
+  const cssFilePath = path.join(OUTPUT_DIR, 'page-styles.min.css');
+  fs.writeFileSync(cssFilePath, pageCSS);
+  console.log(`✅ Created minified CSS file: ${cssFilePath}`);
+  return 'page-styles.min.css';
 }
 
 function convertRichText(richText = []) {
@@ -73,66 +107,13 @@ function renderBlock(block) {
   }
 }
 
-function generateHTML({ title, slug, content, description, titleImage }) {
-  const body = content.map(renderBlock).join('\n');
-  const mainCSS = getMainCSS();
+function generateHTML({ title, slug, content, description, titleImage }, cssFileName) {
+  const body = content.map(renderBlock).join('');
   
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title} - Leilei Xia</title>
-  <meta name="description" content="${description || title}" />
+  // Minify HTML by removing extra whitespace and newlines
+  const minifiedHTML = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>${title} - Leilei Xia</title><meta name="description" content="${description || title}"/><link rel="stylesheet" href="https://unpkg.com/open-props"/><link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/buttons.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/indigo.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/indigo-hsl.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/easings.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/animations.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/sizes.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/><link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/><link rel="stylesheet" href="${cssFileName}"/></head><body><nav class="page-nav"><div class="page-nav__container"><div class="nav__brand"><a href="/" class="page-nav__logo">Leilei Xia</a></div><div class="page-nav__links"><a href="/#about" class="page-nav__link">About</a><a href="/#work" class="page-nav__link">Work</a><a href="/#contact" class="page-nav__link">Contact</a></div></div></nav><main class="main-content"><a href="/" class="back-link">← Back to Portfolio</a>${titleImage ? `<img src="${titleImage}" alt="${title}" class="hero-image"/>` : ''}<h1 class="page-title">${title}</h1>${description ? `<p class="page-description">${description}</p>` : ''}<div class="content">${body}</div></main></body></html>`;
   
-  <!-- Open Props -->
-  <link rel="stylesheet" href="https://unpkg.com/open-props"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/buttons.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/indigo.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/indigo-hsl.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/easings.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/animations.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/sizes.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/>
-  
-  <!-- Main Stylesheet - Inlined -->
-  <style>
-    ${mainCSS}
-  </style>
-</head>
-<body>
-  <!-- Navigation -->
-  <nav class="page-nav">
-    <div class="page-nav__container">
-      <div class="nav__brand">
-        <a href="/" class="page-nav__logo">Leilei Xia</a>
-      </div>
-      <div class="page-nav__links">
-        <a href="/#about" class="page-nav__link">About</a>
-        <a href="/#work" class="page-nav__link">Work</a>
-        <a href="/#contact" class="page-nav__link">Contact</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main Content -->
-  <main class="main-content">
-    <a href="/" class="back-link">← Back to Portfolio</a>
-    
-    ${titleImage ? `<img src="${titleImage}" alt="${title}" class="hero-image" />` : ''}
-    
-    <h1 class="page-title">${title}</h1>
-    
-    ${description ? `<p class="page-description">${description}</p>` : ''}
-    
-    <div class="content">
-      ${body}
-    </div>
-  </main>
-</body>
-</html>`;
+  return minifiedHTML;
 }
 
 async function run() {
@@ -182,6 +163,9 @@ async function run() {
       fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     }
 
+    // Create the minified CSS file once
+    const cssFileName = createPageCSSFile();
+
     for (const page of pages) {
       // Extract additional data for better page generation
       const titleImage = page.titleImage || '';
@@ -194,10 +178,8 @@ async function run() {
         content: page.content,
         description,
         titleImage
-      });
+      }, cssFileName);
 
-      
-      
       // Ensure slug is safe for filename
       const safeSlug = slug.replace(/[^a-zA-Z0-9-_]/g, '-').toLowerCase();
       const filename = `${safeSlug}.html`;
