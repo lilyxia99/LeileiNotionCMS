@@ -15,7 +15,7 @@ async function fetchDataFromAPIEndPoint(){
         const title = card.properties.Name?.title?.[0]?.plain_text || 'Untitled';
         const description = card.properties.description?.rich_text?.[0]?.plain_text || 'No description available';
         const tags = card.properties.tag?.multi_select || [];
-        
+        const type = card.properties.type?.select?.name || "Project";
         const slug = card.properties.slug?.rich_text?.[0]?.plain_text || card.id;
         
         // Generate tag HTML
@@ -30,7 +30,7 @@ async function fetchDataFromAPIEndPoint(){
                 <img src="${imageUrl}" 
                      alt="${title}" class="card__image">
                 <div class="card__overlay">
-                  <span class="card__category">Project</span>
+                  <span class="card__category">${type}</span>
                 </div>
               </div>
               <div class="card__content">
