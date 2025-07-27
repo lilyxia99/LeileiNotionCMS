@@ -4,7 +4,9 @@ import { fileURLToPath } from 'url';
 import fetch from 'node-fetch';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const OUTPUT_DIR = path.resolve(__dirname, '../generated');
+const OUTPUT_DIR = process.env.NODE_ENV === 'production' 
+  ? path.resolve(__dirname, '../dist/generated')
+  : path.resolve(__dirname, '../generated');
 
 function convertRichText(richText = []) {
   return richText
