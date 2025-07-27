@@ -14,8 +14,14 @@ async function fetchDataFromAPIEndPoint(){
         const imageUrl = card.properties.titleImage?.files?.[0]?.external?.url || '';
         const title = card.properties.Name?.title?.[0]?.plain_text || 'Untitled';
         const description = card.properties.description?.rich_text?.[0]?.plain_text || 'No description available';
+        const tags = card.properties.tag?.multi_select || [];
         
         const slug = card.properties.slug?.rich_text?.[0]?.plain_text || card.id;
+        
+        // Generate tag HTML
+        const tagHTML = tags.length > 0 
+          ? tags.map(tag => `<span class="tag">${tag.name}</span>`).join('')
+          : '<span class="tag">Project</span>';
         
         return `
           <article class="card">
@@ -31,8 +37,7 @@ async function fetchDataFromAPIEndPoint(){
                 <h3 class="card__title">${title}</h3>
                 <p class="card__description">${description}</p>
                 <div class="card__tags">
-                  <span class="tag">Design</span>
-                  <span class="tag">Development</span>
+                  ${tagHTML}
                 </div>
               </div>
             </a>
