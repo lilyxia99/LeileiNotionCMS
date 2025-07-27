@@ -316,6 +316,16 @@ body {
   box-shadow: var(--shadow-xl);
 }
 
+.card__link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card__link:hover {
+  color: inherit;
+}
+
 .card__image-wrapper {
   position: relative;
   overflow: hidden;

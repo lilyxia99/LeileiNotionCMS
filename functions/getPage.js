@@ -17,11 +17,12 @@ export default async (req, context) => {
       }
     }
   });
-    const pages = response.results.map((page) =>({
-      Name:page.properties.Name.title[0].plain_text,
-      id:page.id,
-      slug:page.properties.slug.rich_text[0]?.plain_text||page.id,
-
+    const pages = response.results.map((page) => ({
+      Name: page.properties.Name.title[0]?.plain_text || 'Untitled',
+      id: page.id,
+      slug: page.properties.slug?.rich_text?.[0]?.plain_text || page.id,
+      description: page.properties.description?.rich_text?.[0]?.plain_text || '',
+      titleImage: page.properties.titleImage?.files?.[0]?.external?.url || '',
     }));
 
     // Fetch content for each page
@@ -32,9 +33,11 @@ export default async (req, context) => {
           page_size: 100,
         });
         return {
-          page_id:page.id,
-          title:page.Name,
-          slug:page.slug,
+          page_id: page.id,
+          title: page.Name,
+          slug: page.slug,
+          description: page.description,
+          titleImage: page.titleImage,
           content: blocks.results,
         };
       })

@@ -15,23 +15,27 @@ async function fetchDataFromAPIEndPoint(){
         const title = card.properties.Name?.title?.[0]?.plain_text || 'Untitled';
         const description = card.properties.description?.rich_text?.[0]?.plain_text || 'No description available';
         
+        const slug = card.properties.slug?.rich_text?.[0]?.plain_text || card.id;
+        
         return `
           <article class="card">
-            <div class="card__image-wrapper">
-              <img src="${imageUrl}" 
-                   alt="${title}" class="card__image">
-              <div class="card__overlay">
-                <span class="card__category">Project</span>
+            <a href="/generated/${slug}.html" class="card__link">
+              <div class="card__image-wrapper">
+                <img src="${imageUrl}" 
+                     alt="${title}" class="card__image">
+                <div class="card__overlay">
+                  <span class="card__category">Project</span>
+                </div>
               </div>
-            </div>
-            <div class="card__content">
-              <h3 class="card__title">${title}</h3>
-              <p class="card__description">${description}</p>
-              <div class="card__tags">
-                <span class="tag">Design</span>
-                <span class="tag">Development</span>
+              <div class="card__content">
+                <h3 class="card__title">${title}</h3>
+                <p class="card__description">${description}</p>
+                <div class="card__tags">
+                  <span class="tag">Design</span>
+                  <span class="tag">Development</span>
+                </div>
               </div>
-            </div>
+            </a>
           </article>
         `;
       }).join('');
