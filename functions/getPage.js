@@ -25,13 +25,34 @@ export default async (req, context) => {
       titleImage: page.properties.titleImage?.files?.[0]?.external?.url || '',
     }));
 
+    // Recursive function to fetch block children
+    async function fetchBlocksRecursively(blockId) {
+      const blocks = await notion.blocks.children.list({
+        block_id: blockId,
+        page_size: 100,
+      });
+      
+      // For each block, if it has children, fetch them recursively
+      const blocksWithChildren = await Promise.all(
+        blocks.results.map(async (block) => {
+          if (block.has_children) {
+            const children = await fetchBlocksRecursively(block.id);
+            return {
+              ...block,
+              children: children
+            };
+          }
+          return block;
+        })
+      );
+      
+      return blocksWithChildren;
+    }
+
     // Fetch content for each page
     const pagesWithContent = await Promise.all(
       pages.map(async (page) => {
-        const blocks = await notion.blocks.children.list({
-          block_id: page.id,
-          page_size: 100,
-        });
+        const content = await fetchBlocksRecursively(page.id);
         return {
           page_id: page.id,
           title: page.Name,
@@ -40,7 +61,7 @@ export default async (req, context) => {
           titleImage: page.titleImage,
           tag:page.tag,
           type:page.type,
-          content: blocks.results,
+          content: content,
         };
       })
     );

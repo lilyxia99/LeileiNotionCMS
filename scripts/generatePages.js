@@ -46,7 +46,18 @@ function renderBlock(block) {
       return `<blockquote>${convertRichText(block.quote?.rich_text)}</blockquote>`;
     case 'code':
       return `<pre><code>${convertRichText(block.code?.rich_text)}</code></pre>`;
+    case 'column_list':
+      const columns = block.children ? block.children.map(renderBlock).join('') : '';
+      return `<div class="column-list">${columns}</div>`;
+    case 'column':
+      const columnContent = block.children ? block.children.map(renderBlock).join('') : '';
+      return `<div class="column">${columnContent}</div>`;
     default:
+      // Handle blocks with children that aren't specifically handled
+      if (block.children && block.children.length > 0) {
+        const childrenHtml = block.children.map(renderBlock).join('');
+        return `<div class="block-with-children">${childrenHtml}</div>`;
+      }
       return '';
   }
 }
@@ -304,6 +315,22 @@ function generateHTML({ title, slug, content, description, titleImage }) {
     .content li {
       margin-bottom: var(--size-2, 0.75rem);
     }
+    
+    /* Column Layout Styles */
+    .column-list {
+      display: flex;
+      gap: var(--size-4, 1.5rem);
+      margin: var(--size-4, 1.5rem) 0;
+    }
+    
+    .column {
+      flex: 1;
+      min-width: 0; /* Prevents flex items from overflowing */
+    }
+    
+    .block-with-children {
+      margin: var(--size-2, 0.75rem) 0;
+    }
 
     /* Responsive Design */
     @media (max-width: 768px) {
@@ -334,6 +361,12 @@ function generateHTML({ title, slug, content, description, titleImage }) {
       
       .content {
         font-size: 1rem;
+      }
+      
+      /* Stack columns vertically on mobile */
+      .column-list {
+        flex-direction: column;
+        gap: var(--size-2, 0.75rem);
       }
     }
 
