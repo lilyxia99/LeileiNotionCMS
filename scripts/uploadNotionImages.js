@@ -3,12 +3,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import fetch from 'node-fetch';
 import { Client } from "@notionhq/client";
-const{NOTION_KEY,NOTION_DB} = process.env;
-
-// Initializing a client
-const notion = new Client({
-  auth: NOTION_KEY,
-})
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
