@@ -61,34 +61,125 @@ function generateHTML({ title, slug, content, description, titleImage }) {
   
   <!-- Open Props -->
   <link rel="stylesheet" href="https://unpkg.com/open-props"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/buttons.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/indigo.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/indigo-hsl.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/easings.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/animations.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/sizes.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/open-props/gradients.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/open-props/fonts.min.css"/>
   
   <style>
+    /* CSS Custom Properties */
     :root {
       --font-primary: var(--font-humanist);
       --font-display: var(--font-humanist);
       --color-primary: #6366f1;
+      --color-primary-dark: #4f46e5;
+      --color-accent: #f59e0b;
       --color-text-primary: #111827;
       --color-text-secondary: #6b7280;
+      --color-text-light: #9ca3af;
       --color-bg-primary: #ffffff;
       --color-bg-secondary: #f9fafb;
+      --color-bg-tertiary: #f3f4f6;
       --color-border: #e5e7eb;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     }
-    
-    * { box-sizing: border-box; }
-    
+
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: var(--font-primary);
       line-height: 1.6;
       color: var(--color-text-primary);
       background: var(--color-bg-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--size-4, 1rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .nav__logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--color-text-primary);
+      text-decoration: none;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: var(--size-6, 2rem);
+    }
+
+    .nav__link {
+      text-decoration: none;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav__link:hover {
+      color: var(--color-primary);
+    }
+
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-primary);
+      transition: width 0.2s ease;
+    }
+
+    .nav__link:hover::after {
+      width: 100%;
     }
     
-    .container {
-      max-width: 800px;
+    /* Main content */
+    .main-content {
+      max-width: 900px;
       margin: 0 auto;
-      padding: 2rem 1rem;
+      padding: 120px var(--size-4, 1rem) var(--size-8, 3rem);
     }
     
     .back-link {
@@ -96,80 +187,161 @@ function generateHTML({ title, slug, content, description, titleImage }) {
       align-items: center;
       color: var(--color-primary);
       text-decoration: none;
-      margin-bottom: 2rem;
+      margin-bottom: var(--size-6, 2rem);
       font-weight: 500;
+      transition: color 0.2s ease;
     }
     
     .back-link:hover {
-      text-decoration: underline;
+      color: var(--color-primary-dark);
     }
     
     .hero-image {
       width: 100%;
-      height: 300px;
+      height: 400px;
       object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 2rem;
+      border-radius: 16px;
+      margin-bottom: var(--size-6, 2rem);
+      box-shadow: var(--shadow-lg);
     }
     
-    h1 {
+    .page-title {
       font-family: var(--font-display);
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin: 0 0 1rem 0;
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 600;
+      margin: 0 0 var(--size-4, 1.5rem) 0;
       line-height: 1.2;
+      color: var(--color-text-primary);
+    }
+    
+    .page-description {
+      font-size: 1.2rem;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--size-8, 3rem);
+      line-height: 1.6;
     }
     
     .content {
       font-size: 1.1rem;
       line-height: 1.7;
+      color: var(--color-text-primary);
     }
     
     .content p {
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--size-4, 1.5rem);
     }
     
     .content-image {
       width: 100%;
       height: auto;
-      border-radius: 8px;
-      margin: 2rem 0;
+      border-radius: 12px;
+      margin: var(--size-6, 2rem) 0;
+      box-shadow: var(--shadow-md);
+    }
+    
+    .content h1 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin: var(--size-8, 3rem) 0 var(--size-4, 1.5rem) 0;
+      color: var(--color-text-primary);
     }
     
     .content h2 {
       font-family: var(--font-display);
       font-size: 1.8rem;
-      margin: 2rem 0 1rem 0;
+      font-weight: 600;
+      margin: var(--size-6, 2rem) 0 var(--size-3, 1rem) 0;
+      color: var(--color-text-primary);
     }
     
     .content h3 {
       font-family: var(--font-display);
       font-size: 1.4rem;
-      margin: 1.5rem 0 0.5rem 0;
+      font-weight: 600;
+      margin: var(--size-4, 1.5rem) 0 var(--size-2, 0.75rem) 0;
+      color: var(--color-text-primary);
     }
     
-    blockquote {
+    .content blockquote {
       border-left: 4px solid var(--color-primary);
-      padding-left: 1.5rem;
-      margin: 2rem 0;
+      padding-left: var(--size-4, 1.5rem);
+      margin: var(--size-6, 2rem) 0;
       font-style: italic;
       color: var(--color-text-secondary);
-    }
-    
-    pre {
       background: var(--color-bg-secondary);
-      padding: 1rem;
+      padding: var(--size-4, 1.5rem);
       border-radius: 8px;
-      overflow-x: auto;
     }
     
+    .content pre {
+      background: var(--color-bg-secondary);
+      padding: var(--size-4, 1.5rem);
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid var(--color-border);
+    }
+    
+    .content code {
+      background: var(--color-bg-tertiary);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    
+    .content pre code {
+      background: none;
+      padding: 0;
+    }
+    
+    .content ul, .content ol {
+      padding-left: var(--size-6, 2rem);
+      margin-bottom: var(--size-4, 1.5rem);
+    }
+    
+    .content li {
+      margin-bottom: var(--size-2, 0.75rem);
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
+      .nav__links {
+        display: none;
       }
       
-      h1 {
+      .nav__container {
+        justify-content: center;
+      }
+      
+      .main-content {
+        padding: 100px var(--size-3, 0.75rem) var(--size-6, 2rem);
+      }
+      
+      .hero-image {
+        height: 250px;
+        border-radius: 12px;
+      }
+      
+      .page-title {
         font-size: 2rem;
+      }
+      
+      .page-description {
+        font-size: 1.1rem;
+      }
+      
+      .content {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav__container {
+        height: 60px;
+      }
+      
+      .main-content {
+        padding: 80px var(--size-2, 0.5rem) var(--size-4, 1.5rem);
       }
       
       .hero-image {
@@ -179,17 +351,34 @@ function generateHTML({ title, slug, content, description, titleImage }) {
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav__container">
+      <div class="nav__brand">
+        <a href="/" class="nav__logo">Leilei Xia</a>
+      </div>
+      <div class="nav__links">
+        <a href="/#about" class="nav__link">About</a>
+        <a href="/#work" class="nav__link">Work</a>
+        <a href="/#contact" class="nav__link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
     <a href="/" class="back-link">← Back to Portfolio</a>
     
     ${titleImage ? `<img src="${titleImage}" alt="${title}" class="hero-image" />` : ''}
     
-    <h1>${title}</h1>
+    <h1 class="page-title">${title}</h1>
+    
+    ${description ? `<p class="page-description">${description}</p>` : ''}
     
     <div class="content">
       ${body}
     </div>
-  </div>
+  </main>
 </body>
 </html>`;
 }
