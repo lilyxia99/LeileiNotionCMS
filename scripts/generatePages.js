@@ -406,6 +406,18 @@ async function run() {
     const pages = await response.json();
     console.log(`Found ${pages.length} pages to generate`);
 
+        pages.forEach((page, index) => {
+      console.log(`Page ${index + 1}:`);
+      console.log(`  - Title: "${page.title}"`);
+      console.log(`  - Slug: "${page.slug}"`);
+      console.log(`  - Page ID: "${page.page_id}"`);
+      console.log(`  - Has content: ${page.content ? page.content.length : 0} blocks`);
+      console.log(`  - Description: "${page.description}"`);
+      console.log(`  - Title Image: "${page.titleImage}"`);
+      console.log('');
+    });
+
+
     if (!fs.existsSync(OUTPUT_DIR)) {
       fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     }
@@ -423,6 +435,8 @@ async function run() {
         description,
         titleImage
       });
+
+      
       
       // Ensure slug is safe for filename
       const safeSlug = slug.replace(/[^a-zA-Z0-9-_]/g, '-').toLowerCase();
