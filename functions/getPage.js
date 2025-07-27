@@ -43,9 +43,7 @@ export default async (req, context) => {
     return new Response(JSON.stringify(pagesWithContent), {
       headers: { "Content-Type": "application/json" },
     });
-    
-  return new Response(JSON.stringify(blocks))}
-  catch(e){
+  } catch(e){
     console.error(e);
     return new Response(JSON.stringify({statusCode:500,body:e.toString()}))
   }
