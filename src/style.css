@@ -1,7 +1,7 @@
 /* CSS Custom Properties */
 :root {
   --font-primary: var(--font-humanist);
-  --font-display: var(--font-humanist);
+  --font-display: var(--font-handwritten);
   --color-primary: #6366f1;
   --color-primary-dark: #4f46e5;
   --color-accent: #f59e0b;
