@@ -357,7 +357,7 @@ body {
 
 .card__image {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
@@ -390,7 +390,19 @@ body {
 }
 
 .card__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: var(--size-4, 1.5rem);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card__content {
+  transform: translateY(0);
 }
 
 .card__title {
@@ -398,11 +410,11 @@ body {
   font-size: 1.3rem;
   font-weight: 300;
   margin: 0 0 var(--size-2, 0.75rem) 0;
-  color: var(--color-text-primary);
+  color: white;
 }
 
 .card__description {
-  color: var(--color-text-secondary);
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin: 0 0 var(--size-3, 1rem) 0;
   font-size: 0.95rem;
@@ -415,12 +427,13 @@ body {
 }
 
 .tag {
-  background: var(--color-bg-tertiary);
-  color: var(--color-text-secondary);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: 500;
+  backdrop-filter: blur(4px);
 }
 
 /* Contact Section */
