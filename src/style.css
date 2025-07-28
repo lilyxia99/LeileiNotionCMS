@@ -475,7 +475,9 @@ body {
   align-items: center;
   gap: var(--size-4, 1.5rem);
   margin-top: var(--size-4, 1.5rem);
-  margin-left:var(--size-10, 1.5rem);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .contact-icon {
