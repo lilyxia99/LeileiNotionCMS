@@ -115,6 +115,8 @@ body {
 
 
 .hero {
+  --heroPLeft:1rem;
+
   padding: 140px 0 100px;
   background-image:url('https://leileixia-website.b-cdn.net/artworks/Tactileye/Empty%20Touch/DSC00105.jpg');
   /*background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
@@ -139,7 +141,7 @@ body {
 
 .hero__title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 3vw, 4.5rem);
+  font-size: clamp(2rem, 2vw, 4.5rem);
   font-weight: 200;
   line-height: 1.3;
   margin: 0 0 var(--size-4, 1.5rem) 0;
@@ -147,6 +149,7 @@ body {
 }
 
 .hero__title--accent {
+  padding-left:var(--heroPLeft);
   background: var(--gradient-15);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -154,6 +157,7 @@ body {
 }
 
 .hero__subtitle {
+  padding-left:var(--heroPLeft);
   font-size: clamp(1.1rem, 2vw, 1.3rem);
   opacity: 0.9;
   margin: 0 0 var(--size-4, 2rem) 0;
@@ -162,7 +166,13 @@ body {
   width:100% !important;
 }
 
+.nameLogo{
+  display:inline-block;
+  width:25rem;
+}
+
 .hero__cta {
+  padding-left: var(--heroPLeft);
   display: flex;
   gap: var(--size-4, 1rem);
   flex-wrap: wrap;
