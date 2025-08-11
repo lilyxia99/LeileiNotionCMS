@@ -22,6 +22,8 @@
   --sectonTop:var(--size-8, 5rem);
 }
 
+
+
 /* Reset and base styles */
 * {
   box-sizing: border-box;
