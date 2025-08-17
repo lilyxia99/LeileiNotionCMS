@@ -11,6 +11,7 @@
     "generate:pages": "node scripts/generatePages.js",
     "process:images": "node scripts/processNotionImages.js",
     "get:tags": "node scripts/getTagOptions.js",
+    "test:descriptions": "node scripts/testImageDescriptions.js",
     "copy:generated": "mkdir -p dist/generated && cp -r generated/* dist/generated/ 2>/dev/null || true"
   },
   "devDependencies": {
