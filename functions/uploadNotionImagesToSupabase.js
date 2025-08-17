@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js';
 import fetch from 'node-fetch';
 
 // Configuration
-const SUPABASE_BUCKET = 'LeileiWebsite'; // You can change this bucket name
+const SUPABASE_BUCKET = 'notion-images'; // You can change this bucket name
 
 async function uploadToSupabase(imageBuffer, fileName, folderPath, supabaseUrl, supabaseKey) {
   const supabase = createClient(supabaseUrl, supabaseKey);
