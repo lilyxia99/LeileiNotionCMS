@@ -319,6 +319,92 @@ body {
   padding: var(--size-12, 5rem) 0;
 }
 
+/* Filter Section */
+.filter-section {
+  max-width: 1200px;
+  margin: 0 auto var(--size-6, 2rem) auto;
+  padding: 0 var(--size-4, 1rem);
+}
+
+.filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2, 0.5rem);
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: var(--size-4, 1rem);
+}
+
+.filter-toggle:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.filter-toggle__icon {
+  transition: transform 0.2s ease;
+  font-size: 0.8rem;
+}
+
+.filter-toggle.active .filter-toggle__icon {
+  transform: rotate(180deg);
+}
+
+.filter-options {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.filter-options.show {
+  max-height: 200px;
+}
+
+.filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--size-2, 0.5rem);
+  padding: var(--size-3, 1rem) 0;
+}
+
+.filter-tag {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.filter-tag:hover {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.filter-tag.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary-dark);
+}
+
+.filter-tag.show-all {
+  background: var(--color-accent);
+  color: white;
+}
+
+.filter-tag.show-all:hover {
+  background: #d97706;
+}
+
 .card-container {
 
   max-width: 1200px;
@@ -543,6 +629,19 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .filter-section {
+    padding: 0 var(--size-3, 0.75rem);
+  }
+  
+  .filter-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .filter-tags {
+    justify-content: center;
+  }
+  
   .nav__links {
     display: none;
   }
