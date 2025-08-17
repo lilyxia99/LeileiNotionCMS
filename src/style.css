@@ -313,7 +313,15 @@ body {
 .btn--secondary:hover {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Specific animations for hero buttons */
+.hero__cta .btn--secondary:first-child:hover {
   transform: translateY(-2px);
+}
+
+.hero__cta .btn--secondary:last-child:hover {
+  transform: scale(1.05);
 }
 
 /*image title*/
