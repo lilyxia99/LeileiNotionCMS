@@ -166,8 +166,30 @@ async function fetchDataFromAPIEndPoint(){
   }
 }
 
+// Theme management
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', toggleTheme);
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+}
+
 // Add smooth scrolling for navigation links
 document.addEventListener('DOMContentLoaded', async () => {
+  // Initialize theme
+  initTheme();
+  
   // Fetch data
   await fetchDataFromAPIEndPoint();
   

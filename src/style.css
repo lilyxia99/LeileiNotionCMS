@@ -22,6 +22,21 @@
   --sectonTop:var(--size-8, 5rem);
 }
 
+/* Dark mode colors */
+[data-theme="dark"] {
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-text-light: #9ca3af;
+  --color-bg-primary: #111827;
+  --color-bg-secondary: #1f2937;
+  --color-bg-tertiary: #374151;
+  --color-border: #4b5563;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.3), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+}
+
 /* Reset and base styles */
 * {
   box-sizing: border-box;
@@ -82,6 +97,7 @@ body {
 .nav__links {
   display: flex;
   gap: var(--size-6, 2rem);
+  align-items: center;
 }
 
 .nav__link {
@@ -109,6 +125,58 @@ body {
 
 .nav__link:hover::after {
   width: 100%;
+}
+
+/* Dark mode toggle */
+.theme-toggle {
+  background: none;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text-secondary);
+  margin-left: var(--size-4, 1rem);
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: scale(1.05);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(15deg);
+}
+
+/* Hide sun icon in dark mode, show moon icon */
+[data-theme="dark"] .theme-toggle .sun-icon {
+  display: none;
+}
+
+[data-theme="dark"] .theme-toggle .moon-icon {
+  display: block;
+}
+
+/* Hide moon icon in light mode, show sun icon */
+[data-theme="light"] .theme-toggle .moon-icon,
+:root .theme-toggle .moon-icon {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle .sun-icon,
+:root .theme-toggle .sun-icon {
+  display: block;
 }
 
 /* Hero Section */
@@ -809,6 +877,12 @@ body {
 
 .page-nav__link:hover::after {
   width: 100%;
+}
+
+.page-nav__links {
+  display: flex;
+  gap: var(--size-6, 2rem);
+  align-items: center;
 }
 
 .main-content {
