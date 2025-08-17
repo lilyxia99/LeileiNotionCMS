@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && npm run generate:pages && npm run copy:generated",
-    "build:with-images": "vite build && npm run process:images && npm run generate:pages && npm run copy:generated",
+    "build:with-images": "vite build && npm run process:images && npm run generate:pages && npm run copy:generated && npm run descriptions",
     "preview": "vite preview",
     "generate:pages": "node scripts/generatePages.js",
     "process:images": "node scripts/processNotionImages.js",
