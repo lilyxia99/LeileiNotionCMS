@@ -93,21 +93,14 @@ async function updateImageCaption(notion, blockId, newCaption) {
   }
 }
 
-async function processImageBlocks(blocks, notion, pageName, processedImages = []) {
+async function processImageBlocks(blocks, notion, processedImages = []) {
   for (const block of blocks) {
     if (block.type === 'image' && block.image) {
       const imageUrl = block.image?.external?.url || block.image?.file?.url;
-      const existingCaption = block.image?.caption;
-      
-      // Skip if image already has a caption
-      if (existingCaption && existingCaption.length > 0 && existingCaption[0]?.plain_text?.trim()) {
-        console.log(`⏭️ Skipping image with existing caption: ${existingCaption[0].plain_text.substring(0, 50)}...`);
-        continue;
-      }
       
       if (imageUrl) {
         try {
-          console.log(`\n🖼️ Processing image in "${pageName}": ${imageUrl}`);
+          console.log(`\n🖼️  Processing image: ${imageUrl}`);
           
           // Get AI description of the image
           const description = await analyzeImageWithAI(imageUrl);
@@ -117,7 +110,6 @@ async function processImageBlocks(blocks, notion, pageName, processedImages = []
           const success = await updateImageCaption(notion, block.id, description);
           
           processedImages.push({
-            pageName: pageName,
             blockId: block.id,
             imageUrl: imageUrl,
             description: description,
@@ -135,7 +127,7 @@ async function processImageBlocks(blocks, notion, pageName, processedImages = []
     
     // Recursively process children blocks
     if (block.children && block.children.length > 0) {
-      await processImageBlocks(block.children, notion, pageName, processedImages);
+      await processImageBlocks(block.children, notion, processedImages);
     }
   }
 }
@@ -154,25 +146,26 @@ async function run() {
 
     const notion = new Client({ auth: NOTION_KEY });
 
-    console.log('🚀 Starting image description generation for all pages...');
+    console.log('🚀 Starting image description test for "Expect" page...');
 
-    // Query database for all pages with status "done"
+    // Query database for the "Expect" page
     const response = await notion.databases.query({
       database_id: NOTION_DB,
       filter: {
-        property: "Status",
-        status: {
-          equals: "done"
+        property: "Name",
+        title: {
+          equals: "Expect"
         }
       }
     });
 
     if (response.results.length === 0) {
-      console.log('❌ No pages found with status "done"');
+      console.log('❌ No page found with title "Expect"');
       return;
     }
 
-    console.log(`✅ Found ${response.results.length} pages to process`);
+    const expectPage = response.results[0];
+    console.log(`✅ Found "Expect" page: ${expectPage.id}`);
 
     // Recursive function to fetch block children
     async function fetchBlocksRecursively(blockId) {
@@ -197,25 +190,13 @@ async function run() {
       return blocksWithChildren;
     }
 
+    // Fetch all content blocks from the page
+    const content = await fetchBlocksRecursively(expectPage.id);
+    console.log(`📄 Found ${content.length} top-level blocks in the page`);
+
+    // Process all images in the page
     const processedImages = [];
-
-    // Process each page
-    for (const page of response.results) {
-      const pageName = page.properties.Name?.title?.[0]?.plain_text || 'Untitled';
-      console.log(`\n📄 Processing page: "${pageName}"`);
-
-      try {
-        // Fetch all content blocks from the page
-        const content = await fetchBlocksRecursively(page.id);
-        console.log(`   Found ${content.length} top-level blocks`);
-
-        // Process all images in the page
-        await processImageBlocks(content, notion, pageName, processedImages);
-      } catch (error) {
-        console.error(`❌ Error processing page "${pageName}":`, error.message);
-        continue;
-      }
-    }
+    await processImageBlocks(content, notion, processedImages);
 
     console.log(`\n🎉 Processing complete!`);
     console.log(`📊 Summary:`);
@@ -224,21 +205,11 @@ async function run() {
     console.log(`   - Failed updates: ${processedImages.filter(img => !img.updated).length}`);
 
     if (processedImages.length > 0) {
-      console.log(`\n📋 Processed images by page:`);
-      
-      // Group by page name
-      const imagesByPage = processedImages.reduce((acc, img) => {
-        if (!acc[img.pageName]) acc[img.pageName] = [];
-        acc[img.pageName].push(img);
-        return acc;
-      }, {});
-
-      Object.entries(imagesByPage).forEach(([pageName, images]) => {
-        console.log(`\n📄 ${pageName}:`);
-        images.forEach((img, index) => {
-          console.log(`   ${index + 1}. ${img.updated ? '✅' : '❌'} ${img.imageUrl}`);
-          console.log(`      Description: "${img.description}"`);
-        });
+      console.log(`\n📋 Processed images:`);
+      processedImages.forEach((img, index) => {
+        console.log(`${index + 1}. ${img.updated ? '✅' : '❌'} ${img.imageUrl}`);
+        console.log(`   Description: "${img.description}"`);
+        console.log('');
       });
     }
 
