@@ -7,6 +7,8 @@ dotenv.config();
 
 async function analyzeImageWithAI(imageUrl) {
   try {
+    console.log(`🤖 Analyzing image with OpenAI...`);
+    
     // Using OpenAI's GPT-4 Vision API for image analysis
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -15,7 +17,7 @@ async function analyzeImageWithAI(imageUrl) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: "gpt-4-vision-preview",
+        model: "gpt-4o", // Updated to use gpt-4o which has vision capabilities
         messages: [
           {
             role: "user",
@@ -27,7 +29,8 @@ async function analyzeImageWithAI(imageUrl) {
               {
                 type: "image_url",
                 image_url: {
-                  url: imageUrl
+                  url: imageUrl,
+                  detail: "low" // Use low detail to reduce costs
                 }
               }
             ]
@@ -38,11 +41,20 @@ async function analyzeImageWithAI(imageUrl) {
     });
 
     if (!response.ok) {
-      throw new Error(`OpenAI API error: ${response.status}`);
+      const errorText = await response.text();
+      console.error(`OpenAI API Error ${response.status}:`, errorText);
+      throw new Error(`OpenAI API error: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
-    return data.choices[0]?.message?.content || "Image description unavailable";
+    const description = data.choices[0]?.message?.content;
+    
+    if (!description) {
+      console.error('No description returned from OpenAI API');
+      return "Image description unavailable";
+    }
+    
+    return description.trim();
   } catch (error) {
     console.error(`❌ Failed to analyze image ${imageUrl}:`, error.message);
     return "Image description unavailable";
@@ -52,6 +64,12 @@ async function analyzeImageWithAI(imageUrl) {
 async function updateImageCaption(notion, blockId, newCaption) {
   try {
     console.log(`🔄 Updating image caption for block ${blockId}`);
+    
+    // Only update if we have a meaningful caption
+    if (newCaption === "Image description unavailable") {
+      console.log(`⚠️ Skipping update for block ${blockId} - no valid description`);
+      return false;
+    }
     
     await notion.blocks.update({
       block_id: blockId,
