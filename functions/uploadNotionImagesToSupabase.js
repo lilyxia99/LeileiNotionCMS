@@ -186,7 +186,7 @@ async function processPage(notion, page, supabaseUrl, supabaseKey, uploadedUrls)
 
 export default async (req, context) => {
   try {
-    const { NOTION_KEY, NOTION_DB, SUPABASE_URL, SUPABASE_ANON_KEY } = process.env;
+    const { NOTION_KEY, NOTION_DB, SUPASPACE_PROJECT_URL, SUPASPACE_ACCESS_KEY } = process.env;
 
     if (!NOTION_KEY || !NOTION_DB) {
       return new Response(JSON.stringify({ 
@@ -197,9 +197,9 @@ export default async (req, context) => {
       });
     }
 
-    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    if (!SUPASPACE_PROJECT_URL || !SUPASPACE_ACCESS_KEY) {
       return new Response(JSON.stringify({ 
-        error: 'Missing SUPABASE_URL or SUPABASE_ANON_KEY environment variables' 
+        error: 'Missing SUPASPACE_PROJECT_URL or SUPASPACE_ACCESS_KEY environment variables' 
       }), {
         status: 500,
         headers: { "Content-Type": "application/json" }
@@ -210,7 +210,7 @@ export default async (req, context) => {
     const notion = new Client({ auth: NOTION_KEY });
 
     console.log('🚀 Starting Notion image upload to Supabase process...');
-    console.log(`🗄️  Supabase URL: ${SUPABASE_URL}`);
+    console.log(`🗄️  Supabase URL: ${SUPASPACE_PROJECT_URL}`);
     console.log(`📁 Bucket: ${SUPABASE_BUCKET}`);
 
     // Query database directly
@@ -277,7 +277,7 @@ export default async (req, context) => {
 
     // Process each page
     for (const page of pagesWithContent) {
-      await processPage(notion, page, SUPABASE_URL, SUPABASE_ANON_KEY, allUploadedUrls);
+      await processPage(notion, page, SUPASPACE_PROJECT_URL, SUPASPACE_ACCESS_KEY, allUploadedUrls);
     }
 
     console.log('\n🎉 Image upload to Supabase process completed!');
