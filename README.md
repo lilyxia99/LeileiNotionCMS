@@ -12,4 +12,4 @@ I then have my local function in scirpts, which includes generatePages.js and pr
 
 In the future I will make this more accessible (at least the using Notion to generate individual page part) so that everyone can easily modify it. Right now I just don't have time. 
 
-Thank you and enjoy! you can see the result of this website at [www.leileixia.com](www.leileixia.com)
+Thank you and enjoy! you can see the result of this website at [www.leileixia.com](https://leileixia.com)
