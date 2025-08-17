@@ -76,6 +76,10 @@ body {
   transition: all 0.3s ease;
 }
 
+[data-theme="dark"] .nav {
+  background: rgba(17, 24, 39, 0.95);
+}
+
 .nav__container {
   max-width: 1200px;
   margin: 0 auto;
@@ -823,6 +827,10 @@ body {
   transition: all 0.3s ease;
 }
 
+[data-theme="dark"] .page-nav {
+  background: rgba(17, 24, 39, 0.95);
+}
+
 .page-nav__container {
   max-width: 1200px;
   margin: 0 auto;
@@ -878,6 +886,53 @@ body {
   display: flex;
   gap: var(--size-6, 2rem);
   align-items: center;
+}
+
+/* Theme toggle for generated pages */
+.page-nav .theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  color: var(--color-text-secondary);
+  margin-left: var(--size-2, 0.5rem);
+}
+
+.page-nav .theme-toggle:hover {
+  background: var(--color-bg-secondary);
+  color: var(--color-primary);
+}
+
+.page-nav .theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.page-nav .theme-toggle:hover svg {
+  transform: scale(1.1);
+}
+
+/* Hide sun icon in dark mode, show moon icon */
+[data-theme="dark"] .page-nav .theme-toggle .sun-icon {
+  display: none;
+}
+
+[data-theme="dark"] .page-nav .theme-toggle .moon-icon {
+  display: block;
+}
+
+/* Hide moon icon in light mode, show sun icon */
+[data-theme="light"] .page-nav .theme-toggle .moon-icon,
+:root .page-nav .theme-toggle .moon-icon {
+  display: none;
+}
+
+[data-theme="light"] .page-nav .theme-toggle .sun-icon,
+:root .page-nav .theme-toggle .sun-icon {
+  display: block;
 }
 
 .main-content {
