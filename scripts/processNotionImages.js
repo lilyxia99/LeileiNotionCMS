@@ -155,9 +155,9 @@ async function processImageBlocks(blocks, notion, pageSlug, supabaseUrl, supabas
 
 async function run() {
   try {
-    const { NOTION_KEY, NOTION_DB, SUPASPACE_PROJECT_URL, SUPASPACE_API } = process.env;
+    const { NOTION_KEY, NOTION_DB, SUPASPACE_PROJECT_URL, SUPASPACE_JWT } = process.env;
 
-    if (!NOTION_KEY || !NOTION_DB || !SUPASPACE_PROJECT_URL || !SUPASPACE_API) {
+    if (!NOTION_KEY || !NOTION_DB || !SUPASPACE_PROJECT_URL || !SUPASPACE_JWT) {
       throw new Error('Missing required environment variables');
     }
 
@@ -216,7 +216,7 @@ async function run() {
     for (const page of pagesWithContent) {
       if (page.content && page.content.length > 0) {
         const imageIndex = { count: 0 };
-        await processImageBlocks(page.content, notion, page.slug, SUPASPACE_PROJECT_URL, SUPASPACE_API, imageIndex, allUploadedUrls);
+        await processImageBlocks(page.content, notion, page.slug, SUPASPACE_PROJECT_URL, SUPASPACE_JWT, imageIndex, allUploadedUrls);
       }
     }
 
