@@ -315,6 +315,27 @@ body {
   border-color: rgba(255, 255, 255, 0.5);
 }
 
+/*image title*/
+.image-title img{
+   height:10rem;
+}
+
+.image-title-white{
+    display: none;
+}
+
+[data-theme="dark"] .footer__text a{
+  color:var(--yellow-4);
+}
+
+[data-theme="dark"] .image-title-black{
+  display: none;
+}
+
+[data-theme="dark"] .image-title-white{
+  display: block;
+}
+
 /* Section Styles */
 .section__header {
   text-align: left;
