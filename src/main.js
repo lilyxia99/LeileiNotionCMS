@@ -101,7 +101,7 @@ function renderCards(cards) {
   }
   
   cardContainer.innerHTML = cards.map((card) => {
-    const imageUrl = card.properties.titleImage?.files?.[0]?.external?.url || '';
+    const imageUrl = card.properties.titleImage?.files?.[0]?.external?.url || card.properties.titleImage?.files?.[0]?.file?.url;
     const title = card.properties.Name?.title?.[0]?.plain_text || 'Untitled';
     const description = card.properties.description?.rich_text?.[0]?.plain_text || 'No description available';
     const tags = card.properties.tag?.multi_select || [];
