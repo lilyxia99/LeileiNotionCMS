@@ -104,7 +104,6 @@ async function updateNotionImageBlock(notion, blockId, newImageUrl) {
     await notion.blocks.update({
       block_id: blockId,
       image: {
-        type: 'external',
         external: {
           url: newImageUrl
         }
