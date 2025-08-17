@@ -130,33 +130,28 @@ body {
 /* Dark mode toggle */
 .theme-toggle {
   background: none;
-  border: 2px solid var(--color-border);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: none;
   cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
   transition: all 0.2s ease;
   color: var(--color-text-secondary);
-  margin-left: var(--size-4, 1rem);
+  margin-left: var(--size-2, 0.5rem);
 }
 
 .theme-toggle:hover {
-  border-color: var(--color-primary);
+  background: var(--color-bg-secondary);
   color: var(--color-primary);
-  transform: scale(1.05);
 }
 
 .theme-toggle svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   transition: transform 0.2s ease;
 }
 
 .theme-toggle:hover svg {
-  transform: rotate(15deg);
+  transform: scale(1.1);
 }
 
 /* Hide sun icon in dark mode, show moon icon */
