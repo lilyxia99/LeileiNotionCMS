@@ -117,33 +117,6 @@ async function updateNotionImageBlock(notion, blockId, newImageUrl) {
   }
 }
 
-async function updateNotionPageTitleImage(notion, pageId, newImageUrl) {
-  console.log(`🔄 Updating page ${pageId} title image with new URL: ${newImageUrl}`);
-  
-  try {
-    await notion.pages.update({
-      page_id: pageId,
-      properties: {
-        titleImage: {
-          files: [
-            {
-              type: 'external',
-              name: 'Title Image',
-              external: {
-                url: newImageUrl
-              }
-            }
-          ]
-        }
-      }
-    });
-    console.log(`✅ Successfully updated page title image ${pageId}`);
-    return newImageUrl;
-  } catch (error) {
-    console.error(`❌ Failed to update page title image ${pageId}:`, error.message);
-    throw error;
-  }
-}
 
 async function processImageBlocks(blocks, notion, pageSlug, supabaseUrl, supabaseKey, imageIndex = { count: 0 }, uploadedUrls = []) {
   for (const block of blocks) {
@@ -206,7 +179,6 @@ async function run() {
       Name: page.properties.Name.title[0]?.plain_text || 'Untitled',
       id: page.id,
       slug: page.properties.slug?.rich_text?.[0]?.plain_text || page.id,
-      titleImage: page.properties.titleImage?.files?.[0] || null,
     }));
 
     async function fetchBlocksRecursively(blockId) {
@@ -232,10 +204,8 @@ async function run() {
       pages.map(async (page) => {
         const content = await fetchBlocksRecursively(page.id);
         return {
-          page_id: page.id,
           title: page.Name,
           slug: page.slug,
-          titleImage: page.titleImage,
           content: content,
         };
       })
@@ -244,42 +214,6 @@ async function run() {
     const allUploadedUrls = [];
 
     for (const page of pagesWithContent) {
-      // Process title image if it's a Notion-hosted file
-      if (page.titleImage && page.titleImage.type === 'file' && page.titleImage.file && page.titleImage.file.url) {
-        try {
-          console.log(`\n🖼️  Processing title image for page: ${page.title}`);
-          console.log(`📍 Original title image URL: ${page.titleImage.file.url}`);
-          
-          // Download the title image
-          const imageBuffer = await downloadImage(page.titleImage.file.url);
-          
-          // Generate filename for title image
-          const fileName = generateFileName(page.titleImage.file.url, 0);
-          
-          // Upload to Supabase in "headImage" folder
-          const supabaseUrl_new = await uploadToSupabase(imageBuffer, fileName, 'headImage', SUPASPACE_PROJECT_URL, SUPASPACE_SERVICE_KEY);
-          
-          // Update the Notion page title image property
-          const updatedUrl = await updateNotionPageTitleImage(notion, page.page_id, supabaseUrl_new);
-          
-          allUploadedUrls.push({
-            type: 'titleImage',
-            pageId: page.page_id,
-            originalUrl: page.titleImage.file.url,
-            newUrl: updatedUrl,
-            fileName: fileName
-          });
-          
-          console.log(`✅ Successfully processed title image: ${fileName}`);
-          
-        } catch (error) {
-          console.error(`❌ Failed to process title image for page ${page.title}:`, error.message);
-        }
-      } else if (page.titleImage && page.titleImage.type === 'external') {
-        console.log(`⏭️  Skipping title image for page ${page.title} (already external)`);
-      }
-
-      // Process content images
       if (page.content && page.content.length > 0) {
         const imageIndex = { count: 0 };
         await processImageBlocks(page.content, notion, page.slug, SUPASPACE_PROJECT_URL, SUPASPACE_SERVICE_KEY, imageIndex, allUploadedUrls);
@@ -287,11 +221,6 @@ async function run() {
     }
 
     console.log(`\n🎉 Processed ${allUploadedUrls.length} images across ${pagesWithContent.length} pages`);
-    
-    // Show breakdown of processed images
-    const titleImages = allUploadedUrls.filter(url => url.type === 'titleImage').length;
-    const contentImages = allUploadedUrls.filter(url => !url.type || url.type !== 'titleImage').length;
-    console.log(`📊 Breakdown: ${titleImages} title images, ${contentImages} content images`);
     
   } catch (error) {
     console.error('❌ Error:', error.message);
