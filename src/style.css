@@ -462,7 +462,7 @@ body {
 }
 
 .filter-options.show {
-  max-height: 200px;
+  max-height: fit-content;
 }
 
 .filter-tags {
