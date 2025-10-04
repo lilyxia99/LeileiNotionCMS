@@ -228,7 +228,7 @@ async function run() {
     }
     
     const pages = await response.json();
-    console.log(`Found ${pages.length} pages to generate`);
+    console.log(`Found ${pages.length} pages to generate (including private pages)`);
 
         pages.forEach((page, index) => {
       console.log(`Page ${index + 1}:`);

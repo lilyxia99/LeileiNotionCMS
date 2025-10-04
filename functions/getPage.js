@@ -11,10 +11,20 @@ export default async (req, context) => {
   try{const response = await notion.databases.query({
     database_id: NOTION_DB,
     filter:{
-      "property":"Status",
-      "status":{
-        "equals":"done"
-      }
+      "or": [
+        {
+          "property":"Status",
+          "status":{
+            "equals":"done"
+          }
+        },
+        {
+          "property":"Status",
+          "status":{
+            "equals":"private"
+          }
+        }
+      ]
     }
   });
     const pages = response.results.map((page) => ({

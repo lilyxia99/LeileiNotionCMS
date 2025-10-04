@@ -14,10 +14,20 @@ export default async (req) => {
     const response = await notion.databases.query({
       database_id: NOTION_DB,
       filter: {
-        property: "Status",
-        status: {
-          equals: "done"
-        }
+        and: [
+          {
+            property: "Status",
+            status: {
+              equals: "done"
+            }
+          },
+          {
+            property: "Status",
+            status: {
+              does_not_equal: "private"
+            }
+          }
+        ]
       },
       sorts: [
         {
