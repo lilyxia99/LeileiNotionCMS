@@ -4,6 +4,11 @@ The project couldn't be possible without the tutorial from  [Coding in Public to
 
 I personally choose to use Notion as a middle ground, because it kind of serve as a What You See Is What You Get (WYSIWYG) layout editor. I don't like the default asethetic of Notion publishing and the current public approaches can't fullfill my need of customization either.
 
+### To duplicate this template
+
+1. Fork this repository into a new repository
+2. edit the sample.env, delete the "sample" in its name and make it just called ".env", fill in the NOTION_KEY with your Notion API Key, Notion DB as your Notion Database id
+
 If you want to use this code, You can refer to the fetchNotion.js and getPages.js in functions. Those are the main things that's getting the information in real time from Notion. be aware that these are netlify functions, so I stored the enviornment variables  (like my API keys etc) in netlify itself so that they are not leaked in this repository. Of course you could have your own .env in your repository (I ended up doing that too)
 
 Again please watch the tutorials from Coding in Public. They explained pretty much how netlify functions work in this case and I am basically copying that.
