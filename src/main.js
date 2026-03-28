@@ -138,9 +138,18 @@ function renderCards(cards) {
 
 async function fetchDataFromAPIEndPoint(){
   try {
-    const cards = await fetch('/api/fetchNotion')
-      .then((res) => res.json())
-      .then((data) => data.results);
+    const res = await fetch('/api/fetchNotion');
+    const data = await res.json();
+    const cards = data.results;
+    
+    if (!Array.isArray(cards)) {
+      console.error('Unexpected API response — expected data.results to be an array, got:', data);
+      const cardContainer = document.querySelector('#app');
+      if (cardContainer) {
+        cardContainer.innerHTML = '<p>Unable to load projects at this time.</p>';
+      }
+      return;
+    }
     
     console.log(cards);
     

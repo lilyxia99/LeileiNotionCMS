@@ -16,7 +16,7 @@ export default async (req) => {
       filter: {
         property: "Status",
         status: {
-          equals: "Done"
+          equals: "done"
         }
       },
       sorts: [
