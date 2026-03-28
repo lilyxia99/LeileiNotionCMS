@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fetch from 'node-fetch';
+import { Client } from '@notionhq/client';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUTPUT_DIR = process.env.NODE_ENV === 'production' 
@@ -199,35 +199,87 @@ function generateHTML({ title, slug, content, description, titleImage }, cssFile
   return minifiedHTML;
 }
 
+// Fetch pages directly from Notion at build time.
+// This avoids depending on the deployed site's API endpoint, which is not
+// available during the same Netlify deploy that is building the site.
+async function getPagesFromNotion() {
+  // Load dotenv for local development
+  try {
+    const dotenv = await import('dotenv');
+    dotenv.config();
+  } catch (e) {
+    // dotenv not available in production – env vars are injected by Netlify
+  }
+
+  const { NOTION_KEY, NOTION_DB } = process.env;
+  if (!NOTION_KEY || !NOTION_DB) {
+    throw new Error(
+      'Missing NOTION_KEY or NOTION_DB environment variables. ' +
+      'Set them in your Netlify site settings (Build & deploy → Environment).'
+    );
+  }
+
+  const notion = new Client({ auth: NOTION_KEY });
+
+  // Query database – same filter as functions/getPage.js
+  const response = await notion.databases.query({
+    database_id: NOTION_DB,
+    filter: {
+      or: [
+        { property: 'Status', status: { equals: 'done' } },
+        { property: 'Status', status: { equals: 'private' } },
+      ],
+    },
+  });
+
+  const pagesMeta = response.results.map((page) => ({
+    Name: page.properties.Name.title[0]?.plain_text || 'Untitled',
+    id: page.id,
+    slug: page.properties.slug?.rich_text?.[0]?.plain_text || page.id,
+    description: page.properties.description?.rich_text?.[0]?.plain_text || '',
+    titleImage: page.properties.titleImage?.files?.[0]?.external?.url || '',
+  }));
+
+  // Recursive block fetcher – same as functions/getPage.js
+  async function fetchBlocksRecursively(blockId) {
+    const blocks = await notion.blocks.children.list({ block_id: blockId, page_size: 100 });
+    return Promise.all(
+      blocks.results.map(async (block) => {
+        if (block.has_children) {
+          return { ...block, children: await fetchBlocksRecursively(block.id) };
+        }
+        return block;
+      })
+    );
+  }
+
+  // Fetch full content for every page
+  const pagesWithContent = await Promise.all(
+    pagesMeta.map(async (page) => {
+      const content = await fetchBlocksRecursively(page.id);
+      return {
+        page_id: page.id,
+        title: page.Name,
+        slug: page.slug,
+        description: page.description,
+        titleImage: page.titleImage,
+        content,
+      };
+    })
+  );
+
+  return pagesWithContent;
+}
+
 async function run() {
   try {
-    // Import dotenv to load local environment variables
-    try {
-      const dotenv = await import('dotenv');
-      dotenv.config();
-    } catch (e) {
-      // dotenv not available, continue without it
+    console.log('Fetching pages directly from Notion...');
+    const pages = await getPagesFromNotion();
+
+    if (!Array.isArray(pages)) {
+      throw new Error('Expected pages array from Notion but got: ' + typeof pages);
     }
 
-    // Try local development server first, then fallback to deployed URL
-    let apiUrl = 'http://localhost:8888/api/getPage';
-    let response;
-    
-    try {
-      console.log(`Trying local development server: ${apiUrl}`);
-      response = await fetch(apiUrl);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    } catch (localError) {
-      console.log('Local server not available, trying deployed URL...');
-      apiUrl = 'https://leileinotioncms.netlify.app/api/getPage';
-      console.log(`Fetching pages from: ${apiUrl}`);
-      response = await fetch(apiUrl);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-    }
-    
-    const pages = await response.json();
     console.log(`Found ${pages.length} pages to generate (including private pages)`);
 
         pages.forEach((page, index) => {
@@ -274,10 +326,8 @@ async function run() {
     
     console.log(`\n🎉 Successfully generated ${pages.length} pages in ${OUTPUT_DIR}`);
   } catch (error) {
-    console.error('❌ Error generating pages:', error);
-    console.error('Make sure either:');
-    console.error('1. Your dev server is running (npm run dev) in another terminal, OR');
-    console.error('2. Your site is deployed and accessible at the production URL');
+    console.error('❌ Error generating pages:', error.message || error);
+    console.error('Make sure NOTION_KEY and NOTION_DB are set in your environment variables.');
     process.exit(1);
   }
 }
